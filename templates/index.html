@@ -574,7 +574,7 @@
         let currentQuestionIndex = 0;
         let selectedOption = null;
         let timerInterval = null;
-        let timePerQuestion = 30; // Will be set by the backend
+        let timePerQuestion = 30;
         let startTime = null;
         let userAnswers = [];
         let totalQuestions = 0;
@@ -685,7 +685,6 @@
                     alert('Invalid JSON file. Must contain an array of questions.');
                     return;
                 }
-                // Validate first question structure
                 const first = questions[0];
                 if (!first.question || !first.options || !first.correct) {
                     alert('Invalid question format. Each question needs "question", "options", and "correct".');
@@ -706,7 +705,6 @@
             } catch (e) {
                 alert('Error importing file: ' + e.message);
             }
-            // Reset the file input so the same file can be re-uploaded
             event.target.value = '';
         }
 
@@ -764,7 +762,7 @@
             participantId = data.participant_id;
             questions = data.questions;
             totalQuestions = questions.length;
-            timePerQuestion = data.time_per_question || 30; // <-- Set from server
+            timePerQuestion = data.time_per_question || 30;
 
             document.getElementById('joinPanel').style.display = 'none';
             document.getElementById('introPanel').style.display = 'block';
@@ -840,7 +838,7 @@
         }
 
         // ============================================================
-        // 10. TIMER (uses dynamic timePerQuestion)
+        // 10. TIMER
         // ============================================================
         function startTimer() {
             if (timerInterval) clearInterval(timerInterval);
@@ -940,7 +938,7 @@
         }
 
         // ============================================================
-        // 12. SUBMIT ALL ANSWERS -> Shows OUTRO (with CONFETTI 🎊)
+        // 12. SUBMIT ALL ANSWERS -> Shows OUTRO (with CONFETTI)
         // ============================================================
         async function submitAllAnswers() {
             const timeTaken = Math.floor((Date.now() - startTime) / 1000);
@@ -967,7 +965,7 @@
             document.getElementById('finalScoreDisplay').textContent = data.score;
             document.getElementById('finalTimeDisplay').textContent = timeTaken;
 
-            // 🎊 CONFETTI EXPLOSION!
+            // 🎊 CONFETTI EXPLOSION
             if (data.score > 0) {
                 confetti({
                     particleCount: 100,
@@ -984,7 +982,6 @@
                     });
                 }, 200);
             } else {
-                // Even if they got 0, give a little pity confetti
                 confetti({
                     particleCount: 30,
                     spread: 40,

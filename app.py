@@ -7,6 +7,7 @@ import json
 import hashlib
 import hmac
 import urllib.parse
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -101,7 +102,7 @@ def launch_quiz():
         'time_per_question': time_per_question
     }), 201
 
-# 6. Join quiz (participant) - FIXED
+# 6. Join quiz (participant)
 @app.route('/api/quiz/join', methods=['POST'])
 def join_quiz():
     data = request.json
@@ -127,7 +128,7 @@ def join_quiz():
         'quiz_id': quiz['id'],
         'questions': questions,
         'participant_id': participant['id'],
-        'time_per_question': quiz.get('time_per_question', 30)   # <-- FIXED
+        'time_per_question': quiz.get('time_per_question', 30)
     })
 
 # 7. Submit answer
@@ -184,11 +185,19 @@ def get_results(quiz_id):
     results = db.get_quiz_results(quiz_id)
     return jsonify(results)
 
-# Serve the frontend
+# 10. Serve the frontend
 @app.route('/')
+@app.route('/index.html')
 def index():
     return render_template('index.html')
 
+# ---------- Run the app ----------
 if __name__ == '__main__':
-    db.init_db()          # This will now add the missing column
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Initialize database
+    db.init_db()
+    
+    # Get port from environment (Railway sets this automatically)
+    port = int(os.environ.get('PORT', 5000))
+    
+    # Run the app
+    app.run(debug=False, host='0.0.0.0', port=port)
