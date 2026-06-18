@@ -12,6 +12,8 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+# ---------- 🔥 IMPORTANT: Initialize Database on Startup ----------
+db.init_db()  # <-- YEH LINE ADD KARO (imports ke baad)
 # ---------- Helper: generate join code ----------
 def generate_code(length=6):
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
@@ -185,7 +187,7 @@ def get_results(quiz_id):
     results = db.get_quiz_results(quiz_id)
     return jsonify(results)
 
-# 10. Serve the frontend
+# ---------- Serve the frontend ----------
 @app.route('/')
 @app.route('/index.html')
 def index():
@@ -193,11 +195,5 @@ def index():
 
 # ---------- Run the app ----------
 if __name__ == '__main__':
-    # Initialize database
-    db.init_db()
-    
-    # Get port from environment (Railway sets this automatically)
     port = int(os.environ.get('PORT', 5000))
-    
-    # Run the app
     app.run(debug=False, host='0.0.0.0', port=port)
