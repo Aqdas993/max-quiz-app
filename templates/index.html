@@ -11,6 +11,9 @@
     <!-- 🎊 CONFETTI LIBRARY -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     
+    <!-- 📱 QR CODE LIBRARY -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
     <style>
         /* --- RESET & BASE --- */
         * {
@@ -390,11 +393,41 @@
             display: none;
         }
 
+        /* --- QR CODE STYLES --- */
+        .qr-container {
+            text-align: center;
+            margin: 20px 0;
+            padding: 25px;
+            background: #f7fafc;
+            border-radius: 16px;
+            border: 2px dashed #e2e8f0;
+        }
+        
+        .qr-container h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        
+        .qr-container p {
+            color: #718096;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        #qrcode {
+            display: inline-block;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
         /* Responsive */
         @media (max-width: 600px) {
             body { padding: 10px; }
             .section { padding: 20px; }
             .nav-tabs button { padding: 8px 16px; font-size: 13px; }
+            #qrcode canvas { width: 160px !important; height: 160px !important; }
         }
     </style>
 </head>
@@ -466,6 +499,17 @@
         </div>
         <button onclick="launchQuiz()" style="margin-top: 10px;">🚀 Launch Quiz</button>
         <div id="launchInfo"></div>
+
+        <!-- ========================================================== -->
+        <!-- 📱 QR CODE SECTION - ADDED HERE                            -->
+        <!-- ========================================================== -->
+        <hr>
+        
+        <div class="qr-container">
+            <h3>📱 Scan to Open Quiz</h3>
+            <div id="qrcode"></div>
+            <p>Scan this QR code with your phone camera to open the Quiz app</p>
+        </div>
     </div>
 
     <!-- ========================================================== -->
@@ -1032,10 +1076,39 @@
         }
 
         // ============================================================
-        // 15. INITIAL LOAD
+        // 15. QR CODE GENERATION
+        // ============================================================
+        function generateQRCode() {
+            const qrContainer = document.getElementById('qrcode');
+            if (qrContainer) {
+                // Get the current page URL
+                const url = window.location.href;
+                
+                // Clear any existing QR code
+                qrContainer.innerHTML = '';
+                
+                // Generate new QR code
+                new QRCode(qrContainer, {
+                    text: url,
+                    width: 180,
+                    height: 180,
+                    colorDark: "#667eea",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+            }
+        }
+
+        // ============================================================
+        // 16. INITIAL LOAD
         // ============================================================
         loadQuestions();
         showSection('manage');
+        
+        // Generate QR code when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(generateQRCode, 500);
+        });
     </script>
 </body>
 </html>
