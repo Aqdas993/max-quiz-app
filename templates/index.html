@@ -19,7 +19,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
     <style>
-        /* --- RESET & BASE --- */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
         body {
@@ -85,7 +84,6 @@
         .nav-tabs button:hover { background: #f0f2ff; color: #667eea; }
         .nav-tabs button:active { transform: scale(0.95); }
 
-        /* --- SECTIONS --- */
         .section {
             display: none; background: white; border-radius: 20px;
             padding: 28px 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.06);
@@ -97,7 +95,6 @@
         h2 { font-size: 22px; font-weight: 700; color: #1a1a2e; margin-bottom: 20px; border-bottom: 3px solid #667eea; padding-bottom: 10px; display: inline-block; }
         h3 { font-size: 18px; font-weight: 600; margin: 20px 0 12px 0; color: #2d3748; }
 
-        /* --- FORM --- */
         input, select {
             width: 100%; padding: 12px 16px; margin-bottom: 12px;
             border: 2px solid #e2e8f0; border-radius: 12px; font-size: 15px;
@@ -105,7 +102,6 @@
         }
         input:focus, select:focus { outline: none; border-color: #667eea; background: white; box-shadow: 0 0 0 3px rgba(102,126,234,0.15); }
 
-        /* --- BUTTONS --- */
         button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white; border: none; padding: 12px 28px; border-radius: 30px;
@@ -123,7 +119,6 @@
         .delete-btn { background: #fc8181 !important; box-shadow: none !important; padding: 4px 12px !important; font-size: 14px !important; margin-left: 10px !important; }
         .delete-btn:hover { background: #e53e3e !important; }
 
-        /* --- SHARE BUTTONS --- */
         .share-buttons { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 15px; }
         .share-btn { padding: 10px 20px; border-radius: 30px; font-size: 14px; font-weight: 600; border: none; cursor: pointer; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 8px; }
         .share-btn:hover { transform: translateY(-2px); }
@@ -134,14 +129,12 @@
         .share-vk:hover { background: #0055cc; }
         .share-cert:hover { background: #276749; }
 
-        /* --- QUESTION LIST --- */
         #questionList div {
             background: #f8f9fc; padding: 10px 16px; border-radius: 10px;
             margin-bottom: 8px; border-left: 4px solid #667eea;
             font-size: 14px; display: flex; justify-content: space-between; align-items: center;
         }
 
-        /* --- OPTIONS --- */
         .options-container { display: flex; flex-direction: column; gap: 10px; margin: 15px 0; }
         .option {
             background: #f8f9fc; padding: 14px 20px; border: 2px solid #e2e8f0;
@@ -150,11 +143,9 @@
         .option:hover { background: #edf2ff; border-color: #a0b4ff; transform: scale(1.01); }
         .option.selected { background: #667eea; border-color: #667eea; color: white; box-shadow: 0 4px 12px rgba(102,126,234,0.3); }
 
-        /* --- TIMER --- */
         #timer { font-size: 20px; font-weight: 700; background: #fff5f5; padding: 12px 20px; border-radius: 30px; display: inline-block; margin-bottom: 20px; border: 1px solid #fed7d7; }
         #timeLeft { color: #e53e3e; font-size: 26px; }
 
-        /* --- RESULTS --- */
         .result-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 14px 18px; border-bottom: 1px solid #edf2f7;
@@ -163,13 +154,11 @@
         .result-item:hover { background: #f7fafc; }
         .result-item:first-child { background: #fffbeb; border: 1px solid #fbd38d; font-weight: 700; }
 
-        /* --- LAUNCH INFO --- */
         #launchInfo p { background: #ebf8ff; border: 2px dashed #63b3ed; padding: 15px; border-radius: 12px; font-size: 18px; text-align: center; margin: 15px 0; }
         #launchInfo strong { background: #2b6cb0; color: white; padding: 4px 16px; border-radius: 30px; letter-spacing: 1px; font-size: 20px; }
 
         hr { border: none; height: 2px; background: linear-gradient(to right, #e2e8f0, #667eea, #e2e8f0); margin: 25px 0; }
 
-        /* --- PANELS --- */
         .panel-box { text-align: center; padding: 40px 20px; animation: fadeSlideUp 0.5s ease; }
         .panel-box h2 { font-size: 32px; border-bottom: none; display: block; margin-bottom: 10px; }
         .panel-box .emoji-big { font-size: 64px; display: block; margin-bottom: 20px; }
@@ -178,25 +167,45 @@
         @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 4px 15px rgba(72,187,120,0.4); } 50% { transform: scale(1.05); box-shadow: 0 8px 30px rgba(72,187,120,0.6); } 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(72,187,120,0.4); } }
         @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- PROGRESS --- */
         .progress-wrapper { margin-bottom: 10px; background: #edf2f7; border-radius: 30px; height: 12px; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
         .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 30px; transition: width 0.5s ease; }
         .question-counter { font-size: 14px; font-weight: 600; color: #4a5568; text-align: right; margin-bottom: 15px; }
 
-        /* --- OUTRO --- */
-        .thankyou-score { font-size: 48px; font-weight: 800; color: #667eea; margin: 10px 0; }
+        /* --- OUTRO (THANK YOU) SCREEN - PURPLE BOX WITH WHITE SCORE --- */
+        .outro-score-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 40px;
+            border-radius: 16px;
+            display: inline-block;
+            margin: 10px 0;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+        }
+        .outro-score-box .outro-score {
+            font-size: 48px;
+            font-weight: 800;
+            color: #ffffff !important;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .outro-score-box .outro-score-label {
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+            margin: 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
         .thankyou-detail { font-size: 18px; color: #4a5568; background: #f7fafc; padding: 10px 20px; border-radius: 12px; display: inline-block; margin: 5px; }
         .certificate-id { font-size: 14px; color: #718096; background: #edf2f7; padding: 6px 16px; border-radius: 20px; display: inline-block; margin-top: 10px; font-family: monospace; letter-spacing: 1px; }
 
         #fileInput { display: none; }
 
-        /* --- QR CODE --- */
         .qr-container { text-align: center; margin: 20px 0; padding: 25px; background: #f7fafc; border-radius: 16px; border: 2px dashed #e2e8f0; }
         .qr-container h3 { color: #2d3748; margin-bottom: 15px; }
         .qr-container p { color: #718096; font-size: 14px; margin-top: 10px; }
         #qrcode { display: inline-block; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
 
-        /* --- CERTIFICATE PROFESSIONAL STYLES --- */
+        /* --- CERTIFICATE --- */
         #certificate-template {
             position: absolute;
             left: -9999px;
@@ -229,7 +238,6 @@
             pointer-events: none;
         }
 
-        /* === HEADER WITH MAX STYLE LOGO === */
         #certificate-content .cert-header {
             display: flex;
             align-items: center;
@@ -249,10 +257,7 @@
             border-radius: 30px;
         }
 
-        #certificate-content .cert-logo-icon {
-            font-size: 22px;
-        }
-
+        #certificate-content .cert-logo-icon { font-size: 22px; }
         #certificate-content .cert-logo-text {
             font-size: 20px;
             font-weight: 800;
@@ -260,7 +265,6 @@
             letter-spacing: 0.5px;
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         }
-
         #certificate-content .cert-logo-sub {
             font-size: 13px;
             color: #78909c;
@@ -268,12 +272,7 @@
             font-family: 'Arial', sans-serif;
         }
 
-        #certificate-content .cert-badge {
-            font-size: 40px;
-            display: block;
-            margin: 5px 0;
-        }
-
+        #certificate-content .cert-badge { font-size: 40px; display: block; margin: 5px 0; }
         #certificate-content .cert-title {
             font-size: 30px;
             font-weight: 800;
@@ -283,7 +282,6 @@
             text-transform: uppercase;
             font-family: 'Georgia', serif;
         }
-
         #certificate-content .cert-divider {
             width: 80px;
             height: 2px;
@@ -292,14 +290,12 @@
             border: none;
             border-radius: 2px;
         }
-
         #certificate-content .cert-presented {
             font-size: 16px;
             color: #424242;
             margin: 5px 0 3px 0;
             font-family: 'Arial', sans-serif;
         }
-
         #certificate-content .cert-name {
             font-size: 32px;
             font-weight: 700;
@@ -311,14 +307,12 @@
             display: inline-block;
             padding: 0 20px 6px 20px;
         }
-
         #certificate-content .cert-for {
             font-size: 15px;
             color: #424242;
             margin: 5px 0 3px 0;
             font-family: 'Arial', sans-serif;
         }
-
         #certificate-content .cert-quiz-name {
             font-size: 22px;
             font-weight: 700;
@@ -328,7 +322,7 @@
             letter-spacing: 1px;
         }
 
-        /* === PURPLE SCORE BOX === */
+        /* === PURPLE SCORE BOX WITH WHITE SCORE === */
         #certificate-content .cert-score-box {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 12px 35px;
@@ -342,7 +336,7 @@
         #certificate-content .cert-score-box .cert-score {
             font-size: 38px;
             font-weight: 800;
-            color: white;
+            color: #ffffff !important;
             margin: 0;
             font-family: 'Georgia', serif;
             text-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -364,15 +358,8 @@
             margin: 8px 0;
             font-family: 'Arial', sans-serif;
         }
-
-        #certificate-content .cert-details span {
-            font-size: 14px;
-            color: #424242;
-        }
-
-        #certificate-content .cert-details strong {
-            color: #1a237e;
-        }
+        #certificate-content .cert-details span { font-size: 14px; color: #424242; }
+        #certificate-content .cert-details strong { color: #1a237e; }
 
         #certificate-content .cert-id {
             font-size: 12px;
@@ -395,37 +382,9 @@
             align-items: center;
             font-family: 'Arial', sans-serif;
         }
-
-        #certificate-content .cert-footer .cert-org {
-            font-size: 12px;
-            color: #5c6bc0;
-            font-weight: 600;
-        }
-
-        #certificate-content .cert-footer .cert-stamp {
-            font-size: 12px;
-            color: #78909c;
-            font-style: italic;
-        }
-
-        #certificate-content .cert-footer .cert-stamp span {
-            display: block;
-            margin-top: 2px;
-            font-size: 10px;
-            color: #b0bec5;
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 600px) {
-            body { padding: 10px; }
-            .section { padding: 20px; }
-            .nav-tabs button { padding: 8px 16px; font-size: 13px; }
-            #qrcode canvas { width: 160px !important; height: 160px !important; }
-            .header { flex-direction: column; align-items: stretch; gap: 10px; }
-            .header-right { justify-content: flex-end; }
-            .logo { font-size: 22px; }
-            .join-name-input { width: 100% !important; }
-        }
+        #certificate-content .cert-footer .cert-org { font-size: 12px; color: #5c6bc0; font-weight: 600; }
+        #certificate-content .cert-footer .cert-stamp { font-size: 12px; color: #78909c; font-style: italic; }
+        #certificate-content .cert-footer .cert-stamp span { display: block; margin-top: 2px; font-size: 10px; color: #b0bec5; }
 
         .join-name-input {
             padding: 12px 16px;
@@ -443,13 +402,22 @@
             background: white;
             box-shadow: 0 0 0 3px rgba(102,126,234,0.15);
         }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .section { padding: 20px; }
+            .nav-tabs button { padding: 8px 16px; font-size: 13px; }
+            #qrcode canvas { width: 160px !important; height: 160px !important; }
+            .header { flex-direction: column; align-items: stretch; gap: 10px; }
+            .header-right { justify-content: flex-end; }
+            .logo { font-size: 22px; }
+            .join-name-input { width: 100% !important; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ========================================================== -->
     <!-- HEADER -->
-    <!-- ========================================================== -->
     <div class="header">
         <div class="header-left">
             <div class="logo">📚 MAX Quiz</div>
@@ -462,18 +430,14 @@
         </div>
     </div>
 
-    <!-- ========================================================== -->
     <!-- NAVIGATION -->
-    <!-- ========================================================== -->
     <div class="nav-tabs">
         <button onclick="showSection('manage')" id="navManage">Manage Questions</button>
         <button onclick="showSection('quiz')" id="navJoin">Join Quiz</button>
         <button onclick="showSection('results')" id="navResults">View Results</button>
     </div>
 
-    <!-- ========================================================== -->
     <!-- SECTION 1: MANAGE QUESTIONS -->
-    <!-- ========================================================== -->
     <div id="manageSection" class="section active">
         <h2 id="titleAddQuestion">Add Question</h2>
         <div class="card">
@@ -534,9 +498,7 @@
         </div>
     </div>
 
-    <!-- ========================================================== -->
     <!-- SECTION 2: JOIN / PLAY -->
-    <!-- ========================================================== -->
     <div id="quizSection" class="section">
         <h2 id="titleJoinQuiz">📝 Join Quiz</h2>
         
@@ -571,12 +533,18 @@
             <button id="submitBtn" onclick="submitAnswer()">✅ Submit Answer</button>
         </div>
 
+        <!-- OUTRO PANEL - WITH PURPLE SCORE BOX & WHITE SCORE -->
         <div id="outroPanel" style="display:none;" class="panel-box">
             <span class="emoji-big">🎉</span>
             <h2 id="outroTitle">Thank You!</h2>
             <p style="font-size:18px; color:#4a5568;" id="outroText">You've completed the quiz.</p>
-            <div class="thankyou-score" id="finalScoreDisplay">0</div>
-            <div style="font-size:16px; color:#718096;" id="outroPoints">points</div>
+            
+            <!-- PURPLE BOX WITH WHITE SCORE -->
+            <div class="outro-score-box">
+                <p class="outro-score" id="finalScoreDisplay">0</p>
+                <p class="outro-score-label" id="outroPoints">POINTS SCORED</p>
+            </div>
+            
             <br>
             <div class="thankyou-detail">⏱️ Time taken: <span id="finalTimeDisplay">0</span> seconds</div>
             <div class="certificate-id" id="certificateIdDisplay">🆔 CERT-XXXXXXXXXX</div>
@@ -595,17 +563,13 @@
         </div>
     </div>
 
-    <!-- ========================================================== -->
     <!-- SECTION 3: RESULTS -->
-    <!-- ========================================================== -->
     <div id="resultsSection" class="section">
         <h2 id="titleResults">🏆 Results</h2>
         <div id="resultsContainer"></div>
     </div>
 
-    <!-- ========================================================== -->
-    <!-- CERTIFICATE TEMPLATE (MAX Style) -->
-    <!-- ========================================================== -->
+    <!-- CERTIFICATE TEMPLATE -->
     <div id="certificate-template">
         <div id="certificate-content">
             <div class="cert-border-inner"></div>
@@ -628,7 +592,7 @@
 
             <div class="cert-divider"></div>
 
-            <!-- PURPLE SCORE BOX -->
+            <!-- PURPLE SCORE BOX WITH WHITE SCORE -->
             <div class="cert-score-box">
                 <p class="cert-score" id="certScore">0</p>
                 <p class="cert-score-label">POINTS SCORED</p>
@@ -650,9 +614,7 @@
         </div>
     </div>
 
-    <!-- ========================================================== -->
     <!-- JAVASCRIPT -->
-    <!-- ========================================================== -->
     <script>
         // ============================================================
         // TRANSLATIONS
@@ -681,7 +643,7 @@
                 btnSubmit: '✅ Submit Answer',
                 outroTitle: 'Thank You!',
                 outroText: "You've completed the quiz.",
-                outroPoints: 'points',
+                outroPoints: 'POINTS SCORED',
                 btnViewResults: '🏆 View Leaderboard',
                 titleResults: '🏆 Results',
                 noQuestions: 'No questions yet. Add one above!',
@@ -744,7 +706,7 @@
                 btnSubmit: '✅ Отправить ответ',
                 outroTitle: 'Спасибо!',
                 outroText: 'Вы завершили викторину.',
-                outroPoints: 'очков',
+                outroPoints: 'ОЧКОВ НАБРАНО',
                 btnViewResults: '🏆 Посмотреть результаты',
                 titleResults: '🏆 Результаты',
                 noQuestions: 'Нет вопросов. Добавьте один выше!',
@@ -1238,10 +1200,13 @@
 
             document.getElementById('playPanel').style.display = 'none';
             document.getElementById('outroPanel').style.display = 'block';
+            
+            // Set score and time on Thank You screen
             document.getElementById('finalScoreDisplay').textContent = finalScore;
             document.getElementById('finalTimeDisplay').textContent = finalTime;
             document.getElementById('certificateIdDisplay').textContent = '🆔 ' + certificateID;
 
+            // Confetti
             if (finalScore > 0) {
                 confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#667eea', '#764ba2', '#48bb78', '#ed8936', '#f56565'] });
                 setTimeout(() => { confetti({ particleCount: 50, spread: 50, origin: { y: 0.4 }, colors: ['#ffd700', '#ff6b6b', '#4ecdc4'] }); }, 200);
