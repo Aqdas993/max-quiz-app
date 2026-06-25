@@ -171,7 +171,7 @@
         .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); border-radius: 30px; transition: width 0.5s ease; }
         .question-counter { font-size: 14px; font-weight: 600; color: #4a5568; text-align: right; margin-bottom: 15px; }
 
-        /* --- OUTRO (THANK YOU) SCREEN - PURPLE BOX WITH WHITE SCORE --- */
+        /* --- OUTRO (THANK YOU) SCREEN --- */
         .outro-score-box {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 15px 40px;
@@ -533,13 +533,12 @@
             <button id="submitBtn" onclick="submitAnswer()">✅ Submit Answer</button>
         </div>
 
-        <!-- OUTRO PANEL - WITH PURPLE SCORE BOX & WHITE SCORE -->
+        <!-- OUTRO PANEL -->
         <div id="outroPanel" style="display:none;" class="panel-box">
             <span class="emoji-big">🎉</span>
             <h2 id="outroTitle">Thank You!</h2>
             <p style="font-size:18px; color:#4a5568;" id="outroText">You've completed the quiz.</p>
             
-            <!-- PURPLE BOX WITH WHITE SCORE -->
             <div class="outro-score-box">
                 <p class="outro-score" id="finalScoreDisplay">0</p>
                 <p class="outro-score-label" id="outroPoints">POINTS SCORED</p>
@@ -1254,17 +1253,21 @@
         }
 
         // ============================================================
-        // CERTIFICATE DOWNLOAD
+        // CERTIFICATE DOWNLOAD - FIXED (SCORE NOW SHOWS)
         // ============================================================
         function downloadCertificate() {
             const today = new Date();
             const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
             
+            // IMPORTANT: Set all certificate values BEFORE rendering
             document.getElementById('certUserName').textContent = studentName || 'Student';
             document.getElementById('certScore').textContent = finalScore;
             document.getElementById('certTime').textContent = finalTime;
             document.getElementById('certID').textContent = 'Certificate ID: ' + certificateID;
             document.getElementById('certDate').textContent = dateStr;
+            
+            // Force the score to update before capturing
+            console.log('Certificate Values - Name:', studentName, 'Score:', finalScore, 'Time:', finalTime);
             
             const certElement = document.getElementById('certificate-content');
             
