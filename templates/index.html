@@ -42,7 +42,25 @@
         }
 
         .header-left { display: flex; align-items: center; gap: 15px; }
-        .logo { font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1px; }
+        .logo { 
+            font-size: 28px; 
+            font-weight: 800; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            letter-spacing: -1px;
+            position: relative;
+        }
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
         .header-right { display: flex; align-items: center; gap: 12px; }
 
         .lang-select {
@@ -190,7 +208,7 @@
 
         #certificate-content {
             width: 800px;
-            padding: 40px 45px;
+            padding: 35px 40px;
             background: linear-gradient(135deg, #faf9ff 0%, #f0edff 100%);
             font-family: 'Georgia', 'Times New Roman', serif;
             text-align: center;
@@ -202,158 +220,153 @@
 
         #certificate-content .cert-border-inner {
             position: absolute;
-            top: 15px;
-            left: 15px;
-            right: 15px;
-            bottom: 15px;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
             border: 2px solid #ffd700;
             border-radius: 4px;
             pointer-events: none;
         }
 
-        #certificate-content .cert-watermark {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-30deg);
-            font-size: 70px;
-            font-weight: 900;
-            color: rgba(26, 35, 126, 0.04);
-            letter-spacing: 12px;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-
-        /* === HEADER WITH LOGO === */
+        /* === HEADER WITH MAX STYLE LOGO === */
         #certificate-content .cert-header {
             display: flex;
             align-items: center;
-            justify-content: flex-start;
-            gap: 15px;
-            margin-bottom: 15px;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
             border-bottom: 2px solid #e8eaf6;
-            padding-bottom: 15px;
         }
 
-        #certificate-content .cert-logo {
-            font-size: 28px;
-            font-weight: 800;
+        #certificate-content .cert-logo-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 18px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
+            border-radius: 30px;
+        }
+
+        #certificate-content .cert-logo-icon {
+            font-size: 22px;
         }
 
         #certificate-content .cert-logo-text {
-            font-size: 14px;
+            font-size: 20px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 0.5px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        #certificate-content .cert-logo-sub {
+            font-size: 13px;
             color: #78909c;
             font-weight: 400;
             font-family: 'Arial', sans-serif;
-            margin-left: 5px;
         }
 
         #certificate-content .cert-badge {
-            font-size: 48px;
-            margin-bottom: 5px;
+            font-size: 40px;
             display: block;
+            margin: 5px 0;
         }
 
         #certificate-content .cert-title {
-            font-size: 36px;
+            font-size: 30px;
             font-weight: 800;
             color: #1a237e;
-            margin: 5px 0 3px 0;
+            margin: 3px 0;
             letter-spacing: 2px;
             text-transform: uppercase;
             font-family: 'Georgia', serif;
         }
 
-        #certificate-content .cert-subtitle {
-            font-size: 16px;
-            color: #5c6bc0;
-            margin: 0;
-            letter-spacing: 2px;
-            font-weight: 300;
-        }
-
         #certificate-content .cert-divider {
-            width: 100px;
+            width: 80px;
             height: 2px;
             background: linear-gradient(to right, #ffd700, #1a237e, #ffd700);
-            margin: 12px auto;
+            margin: 8px auto;
             border: none;
             border-radius: 2px;
         }
 
         #certificate-content .cert-presented {
-            font-size: 17px;
+            font-size: 16px;
             color: #424242;
-            margin: 8px 0 4px 0;
+            margin: 5px 0 3px 0;
             font-family: 'Arial', sans-serif;
         }
 
         #certificate-content .cert-name {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 700;
             color: #1a237e;
-            margin: 6px 0;
+            margin: 4px 0;
             font-family: 'Georgia', serif;
             letter-spacing: 1px;
             border-bottom: 3px solid #ffd700;
             display: inline-block;
-            padding: 0 25px 8px 25px;
+            padding: 0 20px 6px 20px;
         }
 
         #certificate-content .cert-for {
-            font-size: 16px;
+            font-size: 15px;
             color: #424242;
-            margin: 8px 0 4px 0;
+            margin: 5px 0 3px 0;
             font-family: 'Arial', sans-serif;
         }
 
         #certificate-content .cert-quiz-name {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: #4fc3f7;
-            margin: 3px 0 12px 0;
+            margin: 3px 0 10px 0;
             font-family: 'Georgia', serif;
             letter-spacing: 1px;
         }
 
+        /* === PURPLE SCORE BOX === */
         #certificate-content .cert-score-box {
-            background: linear-gradient(135deg, #1a237e, #0d1442);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 12px 35px;
-            border-radius: 25px;
+            border-radius: 16px;
             display: inline-block;
-            margin: 10px 0;
-            box-shadow: 0 4px 20px rgba(26, 35, 126, 0.3);
+            margin: 8px 0 10px 0;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+            min-width: 120px;
         }
 
         #certificate-content .cert-score-box .cert-score {
-            font-size: 40px;
+            font-size: 38px;
             font-weight: 800;
-            color: #ffd700;
+            color: white;
             margin: 0;
             font-family: 'Georgia', serif;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
 
         #certificate-content .cert-score-box .cert-score-label {
-            font-size: 14px;
-            color: #90caf9;
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
             margin: 0;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-family: 'Arial', sans-serif;
         }
 
         #certificate-content .cert-details {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin: 12px 0;
+            gap: 25px;
+            margin: 8px 0;
             font-family: 'Arial', sans-serif;
         }
 
         #certificate-content .cert-details span {
-            font-size: 15px;
+            font-size: 14px;
             color: #424242;
         }
 
@@ -362,20 +375,20 @@
         }
 
         #certificate-content .cert-id {
-            font-size: 13px;
+            font-size: 12px;
             color: #78909c;
-            margin-top: 10px;
+            margin-top: 8px;
             font-family: 'Courier New', monospace;
             letter-spacing: 1px;
             background: #f5f5f5;
-            padding: 4px 18px;
-            border-radius: 18px;
+            padding: 3px 16px;
+            border-radius: 16px;
             display: inline-block;
         }
 
         #certificate-content .cert-footer {
-            margin-top: 20px;
-            padding-top: 15px;
+            margin-top: 15px;
+            padding-top: 12px;
             border-top: 2px solid #e8eaf6;
             display: flex;
             justify-content: space-between;
@@ -384,21 +397,21 @@
         }
 
         #certificate-content .cert-footer .cert-org {
-            font-size: 13px;
+            font-size: 12px;
             color: #5c6bc0;
             font-weight: 600;
         }
 
         #certificate-content .cert-footer .cert-stamp {
-            font-size: 13px;
+            font-size: 12px;
             color: #78909c;
             font-style: italic;
         }
 
         #certificate-content .cert-footer .cert-stamp span {
             display: block;
-            margin-top: 3px;
-            font-size: 11px;
+            margin-top: 2px;
+            font-size: 10px;
             color: #b0bec5;
         }
 
@@ -591,19 +604,19 @@
     </div>
 
     <!-- ========================================================== -->
-    <!-- CERTIFICATE TEMPLATE -->
+    <!-- CERTIFICATE TEMPLATE (MAX Style) -->
     <!-- ========================================================== -->
     <div id="certificate-template">
         <div id="certificate-content">
             <div class="cert-border-inner"></div>
-            <div class="cert-watermark">MAX QUIZ</div>
             
-            <!-- HEADER WITH LOGO -->
+            <!-- HEADER WITH MAX STYLE LOGO -->
             <div class="cert-header">
-                <div>
-                    <span class="cert-logo">📚 MAX Quiz</span>
-                    <span class="cert-logo-text">• Certificate of Completion</span>
+                <div class="cert-logo-box">
+                    <span class="cert-logo-icon">📚</span>
+                    <span class="cert-logo-text">MAX Quiz</span>
                 </div>
+                <span class="cert-logo-sub">• Certificate of Completion</span>
             </div>
 
             <span class="cert-badge">🏅</span>
@@ -613,8 +626,9 @@
             <p class="cert-for">for successfully completing the</p>
             <div class="cert-quiz-name">★ MAX Quiz ★</div>
 
-            <hr class="cert-divider">
+            <div class="cert-divider"></div>
 
+            <!-- PURPLE SCORE BOX -->
             <div class="cert-score-box">
                 <p class="cert-score" id="certScore">0</p>
                 <p class="cert-score-label">POINTS SCORED</p>
