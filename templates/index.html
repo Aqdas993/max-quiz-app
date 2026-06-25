@@ -190,24 +190,24 @@
 
         #certificate-content {
             width: 800px;
-            padding: 60px 50px;
+            padding: 40px 45px;
             background: linear-gradient(135deg, #faf9ff 0%, #f0edff 100%);
             font-family: 'Georgia', 'Times New Roman', serif;
             text-align: center;
-            border: 15px solid #1a237e;
-            border-radius: 12px;
+            border: 12px solid #1a237e;
+            border-radius: 10px;
             position: relative;
             box-shadow: 0 20px 60px rgba(26, 35, 126, 0.15);
         }
 
         #certificate-content .cert-border-inner {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            border: 3px solid #ffd700;
-            border-radius: 6px;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
+            border: 2px solid #ffd700;
+            border-radius: 4px;
             pointer-events: none;
         }
 
@@ -216,32 +216,60 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) rotate(-30deg);
-            font-size: 80px;
+            font-size: 70px;
             font-weight: 900;
-            color: rgba(26, 35, 126, 0.05);
-            letter-spacing: 15px;
+            color: rgba(26, 35, 126, 0.04);
+            letter-spacing: 12px;
             pointer-events: none;
             white-space: nowrap;
         }
 
+        /* === HEADER WITH LOGO === */
+        #certificate-content .cert-header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e8eaf6;
+            padding-bottom: 15px;
+        }
+
+        #certificate-content .cert-logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        #certificate-content .cert-logo-text {
+            font-size: 14px;
+            color: #78909c;
+            font-weight: 400;
+            font-family: 'Arial', sans-serif;
+            margin-left: 5px;
+        }
+
         #certificate-content .cert-badge {
-            font-size: 64px;
-            margin-bottom: 10px;
+            font-size: 48px;
+            margin-bottom: 5px;
             display: block;
         }
 
         #certificate-content .cert-title {
-            font-size: 44px;
+            font-size: 36px;
             font-weight: 800;
             color: #1a237e;
-            margin: 10px 0 5px 0;
-            letter-spacing: 3px;
+            margin: 5px 0 3px 0;
+            letter-spacing: 2px;
             text-transform: uppercase;
             font-family: 'Georgia', serif;
         }
 
         #certificate-content .cert-subtitle {
-            font-size: 18px;
+            font-size: 16px;
             color: #5c6bc0;
             margin: 0;
             letter-spacing: 2px;
@@ -249,60 +277,60 @@
         }
 
         #certificate-content .cert-divider {
-            width: 120px;
-            height: 3px;
+            width: 100px;
+            height: 2px;
             background: linear-gradient(to right, #ffd700, #1a237e, #ffd700);
-            margin: 20px auto;
+            margin: 12px auto;
             border: none;
             border-radius: 2px;
         }
 
         #certificate-content .cert-presented {
-            font-size: 18px;
+            font-size: 17px;
             color: #424242;
-            margin: 10px 0 5px 0;
+            margin: 8px 0 4px 0;
             font-family: 'Arial', sans-serif;
         }
 
         #certificate-content .cert-name {
-            font-size: 40px;
+            font-size: 36px;
             font-weight: 700;
             color: #1a237e;
-            margin: 8px 0;
+            margin: 6px 0;
             font-family: 'Georgia', serif;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             border-bottom: 3px solid #ffd700;
             display: inline-block;
-            padding: 0 30px 10px 30px;
+            padding: 0 25px 8px 25px;
         }
 
         #certificate-content .cert-for {
-            font-size: 17px;
+            font-size: 16px;
             color: #424242;
-            margin: 10px 0 5px 0;
+            margin: 8px 0 4px 0;
             font-family: 'Arial', sans-serif;
         }
 
         #certificate-content .cert-quiz-name {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: 700;
             color: #4fc3f7;
-            margin: 5px 0 15px 0;
+            margin: 3px 0 12px 0;
             font-family: 'Georgia', serif;
             letter-spacing: 1px;
         }
 
         #certificate-content .cert-score-box {
             background: linear-gradient(135deg, #1a237e, #0d1442);
-            padding: 15px 40px;
-            border-radius: 30px;
+            padding: 12px 35px;
+            border-radius: 25px;
             display: inline-block;
-            margin: 15px 0;
+            margin: 10px 0;
             box-shadow: 0 4px 20px rgba(26, 35, 126, 0.3);
         }
 
         #certificate-content .cert-score-box .cert-score {
-            font-size: 48px;
+            font-size: 40px;
             font-weight: 800;
             color: #ffd700;
             margin: 0;
@@ -310,7 +338,7 @@
         }
 
         #certificate-content .cert-score-box .cert-score-label {
-            font-size: 16px;
+            font-size: 14px;
             color: #90caf9;
             margin: 0;
             letter-spacing: 1px;
@@ -319,13 +347,13 @@
         #certificate-content .cert-details {
             display: flex;
             justify-content: center;
-            gap: 40px;
-            margin: 20px 0;
+            gap: 30px;
+            margin: 12px 0;
             font-family: 'Arial', sans-serif;
         }
 
         #certificate-content .cert-details span {
-            font-size: 16px;
+            font-size: 15px;
             color: #424242;
         }
 
@@ -334,20 +362,20 @@
         }
 
         #certificate-content .cert-id {
-            font-size: 14px;
+            font-size: 13px;
             color: #78909c;
-            margin-top: 15px;
+            margin-top: 10px;
             font-family: 'Courier New', monospace;
             letter-spacing: 1px;
             background: #f5f5f5;
-            padding: 5px 20px;
-            border-radius: 20px;
+            padding: 4px 18px;
+            border-radius: 18px;
             display: inline-block;
         }
 
         #certificate-content .cert-footer {
-            margin-top: 30px;
-            padding-top: 20px;
+            margin-top: 20px;
+            padding-top: 15px;
             border-top: 2px solid #e8eaf6;
             display: flex;
             justify-content: space-between;
@@ -356,21 +384,21 @@
         }
 
         #certificate-content .cert-footer .cert-org {
-            font-size: 14px;
+            font-size: 13px;
             color: #5c6bc0;
             font-weight: 600;
         }
 
         #certificate-content .cert-footer .cert-stamp {
-            font-size: 14px;
+            font-size: 13px;
             color: #78909c;
             font-style: italic;
         }
 
         #certificate-content .cert-footer .cert-stamp span {
             display: block;
-            margin-top: 4px;
-            font-size: 12px;
+            margin-top: 3px;
+            font-size: 11px;
             color: #b0bec5;
         }
 
@@ -383,6 +411,24 @@
             .header { flex-direction: column; align-items: stretch; gap: 10px; }
             .header-right { justify-content: flex-end; }
             .logo { font-size: 22px; }
+            .join-name-input { width: 100% !important; }
+        }
+
+        .join-name-input {
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: border 0.2s;
+            background: #fafbfc;
+            width: 100%;
+            margin-bottom: 12px;
+        }
+        .join-name-input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.15);
         }
     </style>
 </head>
@@ -482,6 +528,7 @@
         <h2 id="titleJoinQuiz">📝 Join Quiz</h2>
         
         <div id="joinPanel">
+            <input type="text" class="join-name-input" id="studentNameInput" placeholder="Enter your full name">
             <input type="text" id="joinCodeInput" placeholder="Enter join code">
             <button onclick="joinQuiz()" id="btnJoin">Join</button>
         </div>
@@ -544,29 +591,41 @@
     </div>
 
     <!-- ========================================================== -->
-    <!-- CERTIFICATE TEMPLATE (Professional Design) -->
+    <!-- CERTIFICATE TEMPLATE -->
     <!-- ========================================================== -->
     <div id="certificate-template">
         <div id="certificate-content">
             <div class="cert-border-inner"></div>
             <div class="cert-watermark">MAX QUIZ</div>
+            
+            <!-- HEADER WITH LOGO -->
+            <div class="cert-header">
+                <div>
+                    <span class="cert-logo">📚 MAX Quiz</span>
+                    <span class="cert-logo-text">• Certificate of Completion</span>
+                </div>
+            </div>
+
             <span class="cert-badge">🏅</span>
-            <h1 class="cert-title">Certificate of Completion</h1>
-            <p class="cert-subtitle">━━━━ ◆ ━━━━</p>
-            <hr class="cert-divider">
+            
             <p class="cert-presented">This certificate is proudly presented to</p>
-            <div class="cert-name" id="certUserName">User</div>
+            <div class="cert-name" id="certUserName">Student Name</div>
             <p class="cert-for">for successfully completing the</p>
             <div class="cert-quiz-name">★ MAX Quiz ★</div>
+
             <hr class="cert-divider">
+
             <div class="cert-score-box">
                 <p class="cert-score" id="certScore">0</p>
                 <p class="cert-score-label">POINTS SCORED</p>
             </div>
+
             <div class="cert-details">
                 <span>⏱️ <strong>Time taken:</strong> <span id="certTime">0</span> seconds</span>
             </div>
+
             <div class="cert-id" id="certID">Certificate ID: CERT-XXXXXXXXXX</div>
+
             <div class="cert-footer">
                 <div class="cert-org">📚 MAX Quiz • Southern Federal University</div>
                 <div class="cert-stamp">
@@ -613,6 +672,7 @@
                 titleResults: '🏆 Results',
                 noQuestions: 'No questions yet. Add one above!',
                 enterCode: 'Enter join code',
+                enterName: 'Enter your full name',
                 pleaseFill: 'Please fill all fields',
                 questionAdded: 'Question added!',
                 deleteConfirm: 'Delete this question permanently?',
@@ -630,6 +690,7 @@
                 shareCode: 'Share this code with participants.',
                 joinError: 'Join failed: {error}',
                 enterJoinCode: 'Please enter the join code',
+                enterStudentName: 'Please enter your full name',
                 selectOption: 'Please select an option or wait for the timer.',
                 errorSubmitting: 'Error submitting answers',
                 noQuizSelected: 'No quiz selected.',
@@ -674,6 +735,7 @@
                 titleResults: '🏆 Результаты',
                 noQuestions: 'Нет вопросов. Добавьте один выше!',
                 enterCode: 'Введите код',
+                enterName: 'Введите ваше полное имя',
                 pleaseFill: 'Пожалуйста, заполните все поля',
                 questionAdded: 'Вопрос добавлен!',
                 deleteConfirm: 'Удалить этот вопрос навсегда?',
@@ -691,6 +753,7 @@
                 shareCode: 'Поделитесь этим кодом с участниками.',
                 joinError: 'Ошибка присоединения: {error}',
                 enterJoinCode: 'Пожалуйста, введите код',
+                enterStudentName: 'Пожалуйста, введите ваше полное имя',
                 selectOption: 'Пожалуйста, выберите вариант или дождитесь таймера.',
                 errorSubmitting: 'Ошибка при отправке ответов',
                 noQuizSelected: 'Викторина не выбрана.',
@@ -740,6 +803,7 @@
             document.getElementById('btnViewResults').textContent = t.btnViewResults;
             document.getElementById('titleResults').textContent = t.titleResults;
             document.getElementById('joinCodeInput').placeholder = t.enterCode;
+            document.getElementById('studentNameInput').placeholder = t.enterName;
         }
 
         // ============================================================
@@ -776,13 +840,6 @@
             }
         }
 
-        function getUserName() {
-            if (maxUserInfo && maxUserInfo.firstName) {
-                return maxUserInfo.firstName + ' ' + (maxUserInfo.lastName || '');
-            }
-            return 'User';
-        }
-
         // ============================================================
         // GLOBAL STATE
         // ============================================================
@@ -800,6 +857,7 @@
         let finalScore = 0;
         let finalTime = 0;
         let certificateID = '';
+        let studentName = '';
 
         function showSection(section) {
             document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
@@ -953,13 +1011,23 @@
         // JOIN QUIZ
         // ============================================================
         async function joinQuiz() {
+            const name = document.getElementById('studentNameInput').value.trim();
             const code = document.getElementById('joinCodeInput').value.trim();
+            
+            if (!name) {
+                alert(t('enterStudentName'));
+                return;
+            }
             if (!code) {
                 alert(t('enterJoinCode'));
                 return;
             }
+            
+            studentName = name;
+            
             const user_id = getUserIdForQuiz();
-            console.log('Joining with user ID:', user_id);
+            console.log('Joining with user ID:', user_id, 'Name:', studentName);
+            
             const resp = await fetch('/api/quiz/join', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -1118,7 +1186,7 @@
         }
 
         // ============================================================
-        // SUBMIT ALL ANSWERS with UNIQUE CERTIFICATE ID
+        // SUBMIT ALL ANSWERS
         // ============================================================
         async function submitAllAnswers() {
             const timeTaken = Math.floor((Date.now() - startTime) / 1000);
@@ -1141,9 +1209,7 @@
             finalScore = data.score;
             finalTime = timeTaken;
 
-            // ==========================================================
-            // 🆕 UNIQUE CERTIFICATE ID WITH USER ID + TIMESTAMP + RANDOM
-            // ==========================================================
+            // Generate unique certificate ID
             let userID = getUserIdForQuiz();
             if (userID.startsWith('test_user_')) {
                 userID = userID.replace('test_user_', '').substring(0, 6).toUpperCase();
@@ -1212,11 +1278,10 @@
         // CERTIFICATE DOWNLOAD
         // ============================================================
         function downloadCertificate() {
-            const userName = getUserName();
             const today = new Date();
             const dateStr = today.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
             
-            document.getElementById('certUserName').textContent = userName;
+            document.getElementById('certUserName').textContent = studentName || 'Student';
             document.getElementById('certScore').textContent = finalScore;
             document.getElementById('certTime').textContent = finalTime;
             document.getElementById('certID').textContent = 'Certificate ID: ' + certificateID;
