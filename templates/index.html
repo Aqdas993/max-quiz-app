@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MAX Quiz</title>
     
-    <!-- Load MAX Bridge Library -->
+    <!-- MAX Bridge Library -->
     <script src="https://st.max.ru/js/max-web-app.js"></script>
     
-    <!-- 🎊 CONFETTI LIBRARY -->
+    <!-- Confetti Library -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
     
-    <!-- 📱 QR CODE LIBRARY -->
+    <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
+    <!-- html2canvas + jsPDF for Certificate -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
     <style>
         /* --- RESET & BASE --- */
@@ -25,10 +29,69 @@
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
             background: #f0f2f5;
-            max-width: 800px;
+            max-width: 900px;
             margin: 30px auto;
             padding: 0 20px;
             color: #1a1a2e;
+        }
+
+        /* --- HEADER WITH LOGO & LANGUAGE SWITCH --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -1px;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            vertical-align: middle;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .lang-select {
+            padding: 8px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            background: white;
+            color: #1a1a2e;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        .lang-select:hover {
+            border-color: #667eea;
+        }
+
+        .lang-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
         }
 
         h1 {
@@ -39,6 +102,7 @@
             -webkit-text-fill-color: transparent;
             margin-bottom: 25px;
             text-align: center;
+            display: none;
         }
 
         /* --- NAVIGATION TABS --- */
@@ -75,7 +139,7 @@
             transform: scale(0.95);
         }
 
-        /* --- CARDS (Sections) --- */
+        /* --- CARDS --- */
         .section {
             display: none;
             background: white;
@@ -174,7 +238,6 @@
             border-color: #667eea;
         }
 
-        /* Delete button style */
         .delete-btn {
             background: #fc8181 !important;
             box-shadow: none !important;
@@ -186,7 +249,58 @@
             background: #e53e3e !important;
         }
 
-        /* --- QUESTION BANK LIST --- */
+        /* --- SHARE BUTTONS --- */
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .share-btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .share-telegram {
+            background: #0088cc;
+            color: white;
+        }
+
+        .share-vk {
+            background: #0077ff;
+            color: white;
+        }
+
+        .share-cert {
+            background: linear-gradient(135deg, #38a169, #2f855a);
+            color: white;
+        }
+
+        .share-telegram:hover {
+            background: #006699;
+        }
+        .share-vk:hover {
+            background: #0055cc;
+        }
+        .share-cert:hover {
+            background: #276749;
+        }
+
+        /* --- QUESTION BANK --- */
         #questionList div {
             background: #f8f9fc;
             padding: 10px 16px;
@@ -247,7 +361,7 @@
             font-size: 26px;
         }
 
-        /* --- RESULTS LIST --- */
+        /* --- RESULTS --- */
         .result-item {
             display: flex;
             justify-content: space-between;
@@ -270,15 +384,7 @@
             font-weight: 700;
         }
 
-        .score {
-            background: #48bb78;
-            color: white;
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-
-        /* --- JOIN CODE DISPLAY --- */
+        /* --- LAUNCH INFO --- */
         #launchInfo p {
             background: #ebf8ff;
             border: 2px dashed #63b3ed;
@@ -305,7 +411,7 @@
             margin: 25px 0;
         }
 
-        /* --- INTRO / OUTRO PANELS --- */
+        /* --- INTRO / OUTRO --- */
         .panel-box {
             text-align: center;
             padding: 40px 20px;
@@ -370,7 +476,7 @@
             margin-bottom: 15px;
         }
 
-        /* --- OUTRO SPECIFICS --- */
+        /* --- OUTRO --- */
         .thankyou-score {
             font-size: 48px;
             font-weight: 800;
@@ -388,12 +494,23 @@
             margin: 5px;
         }
 
-        /* Import file input hidden */
+        .certificate-id {
+            font-size: 14px;
+            color: #718096;
+            background: #edf2f7;
+            padding: 6px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+
         #fileInput {
             display: none;
         }
 
-        /* --- QR CODE STYLES --- */
+        /* --- QR CODE --- */
         .qr-container {
             text-align: center;
             margin: 20px 0;
@@ -422,30 +539,56 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
 
-        /* Responsive */
+        /* --- CERTIFICATE HIDDEN --- */
+        #certificate-template {
+            display: none;
+        }
+
+        /* --- RESPONSIVE --- */
         @media (max-width: 600px) {
             body { padding: 10px; }
             .section { padding: 20px; }
             .nav-tabs button { padding: 8px 16px; font-size: 13px; }
             #qrcode canvas { width: 160px !important; height: 160px !important; }
+            .header { flex-direction: column; align-items: stretch; gap: 10px; }
+            .header-right { justify-content: flex-end; }
+            .logo { font-size: 22px; }
         }
     </style>
 </head>
 <body>
-    <h1>📚 MAX Quiz</h1>
 
-    <!-- Navigation buttons -->
+    <!-- ========================================================== -->
+    <!-- HEADER WITH LOGO + LANGUAGE SWITCH                         -->
+    <!-- ========================================================== -->
+    <div class="header">
+        <div class="header-left">
+            <div class="logo">
+                <span>📚 MAX Quiz</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <select class="lang-select" id="langSelect" onchange="switchLanguage(this.value)">
+                <option value="en">🇬🇧 English</option>
+                <option value="ru">🇷🇺 Русский</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- NAVIGATION                                                 -->
+    <!-- ========================================================== -->
     <div class="nav-tabs">
-        <button onclick="showSection('manage')">Manage Questions</button>
-        <button onclick="showSection('quiz')">Join Quiz</button>
-        <button onclick="showSection('results')">View Results</button>
+        <button onclick="showSection('manage')" id="navManage">Manage Questions</button>
+        <button onclick="showSection('quiz')" id="navJoin">Join Quiz</button>
+        <button onclick="showSection('results')" id="navResults">View Results</button>
     </div>
 
     <!-- ========================================================== -->
     <!-- SECTION 1: MANAGE QUESTIONS                                 -->
     <!-- ========================================================== -->
     <div id="manageSection" class="section active">
-        <h2>Add Question</h2>
+        <h2 id="titleAddQuestion">Add Question</h2>
         <div class="card">
             <input type="text" id="qText" placeholder="Question text">
             <input type="text" id="opt1" placeholder="Option 1">
@@ -458,35 +601,30 @@
                 <option value="3">Option 3 is correct</option>
                 <option value="4">Option 4 is correct</option>
             </select>
-            <button onclick="addQuestion()">➕ Add Question</button>
+            <button onclick="addQuestion()" id="btnAddQuestion">➕ Add Question</button>
         </div>
         
-        <h3>Question Bank</h3>
+        <h3 id="titleQuestionBank">Question Bank</h3>
         <div id="questionList"></div>
         
         <hr>
         
-        <!-- EXPORT / IMPORT -->
         <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
-            <button onclick="exportQuestions()" style="background: linear-gradient(135deg, #38a169, #2f855a);">
-                📥 Export Questions
-            </button>
-            <button onclick="document.getElementById('fileInput').click()" style="background: linear-gradient(135deg, #dd6b20, #c05621);">
-                📤 Import Questions
-            </button>
+            <button onclick="exportQuestions()" style="background: linear-gradient(135deg, #38a169, #2f855a);" id="btnExport">📥 Export Questions</button>
+            <button onclick="document.getElementById('fileInput').click()" style="background: linear-gradient(135deg, #dd6b20, #c05621);" id="btnImport">📤 Import Questions</button>
             <input type="file" id="fileInput" accept=".json" onchange="importQuestions(event)">
         </div>
         
         <hr>
         
-        <h3>Launch a Quiz</h3>
+        <h3 id="titleLaunchQuiz">Launch a Quiz</h3>
         <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
             <div style="flex: 1; min-width: 120px;">
-                <label>Number of questions:</label>
+                <label id="labelNumQuestions">Number of questions:</label>
                 <input type="number" id="numQuestions" value="3" min="1" style="width: 100%;">
             </div>
             <div style="flex: 1; min-width: 120px;">
-                <label>Time per question:</label>
+                <label id="labelTimePerQuestion">Time per question:</label>
                 <select id="timePerQuestion" style="width: 100%;">
                     <option value="5">5 seconds</option>
                     <option value="10">10 seconds</option>
@@ -497,18 +635,15 @@
                 </select>
             </div>
         </div>
-        <button onclick="launchQuiz()" style="margin-top: 10px;">🚀 Launch Quiz</button>
+        <button onclick="launchQuiz()" style="margin-top: 10px;" id="btnLaunchQuiz">🚀 Launch Quiz</button>
         <div id="launchInfo"></div>
 
-        <!-- ========================================================== -->
-        <!-- 📱 QR CODE SECTION - ADDED HERE                            -->
-        <!-- ========================================================== -->
         <hr>
         
         <div class="qr-container">
-            <h3>📱 Scan to Open Quiz</h3>
+            <h3 id="qrTitle">📱 Scan to Open Quiz</h3>
             <div id="qrcode"></div>
-            <p>Scan this QR code with your phone camera to open the Quiz app</p>
+            <p id="qrDesc">Scan this QR code with your phone camera to open the Quiz app</p>
         </div>
     </div>
 
@@ -516,21 +651,21 @@
     <!-- SECTION 2: JOIN / PLAY QUIZ                                 -->
     <!-- ========================================================== -->
     <div id="quizSection" class="section">
-        <h2>📝 Join Quiz</h2>
+        <h2 id="titleJoinQuiz">📝 Join Quiz</h2>
         
         <div id="joinPanel">
             <input type="text" id="joinCodeInput" placeholder="Enter join code">
-            <button onclick="joinQuiz()">Join</button>
+            <button onclick="joinQuiz()" id="btnJoin">Join</button>
         </div>
 
         <div id="introPanel" style="display:none;" class="panel-box">
             <span class="emoji-big">📋</span>
-            <h2>Quiz is Ready!</h2>
-            <p style="font-size:18px; color:#4a5568;">
+            <h2 id="introTitle">Quiz is Ready!</h2>
+            <p style="font-size:18px; color:#4a5568;" id="introText">
                 You are about to answer <strong id="introTotalQ">0</strong> questions.
                 <br>⏱️ You have <strong id="introTimePerQ">30</strong> seconds per question.
             </p>
-            <button class="btn-start" onclick="startQuizNow()">🚀 Start Now</button>
+            <button class="btn-start" onclick="startQuizNow()" id="btnStartNow">🚀 Start Now</button>
         </div>
 
         <div id="playPanel" style="display:none;">
@@ -550,14 +685,23 @@
 
         <div id="outroPanel" style="display:none;" class="panel-box">
             <span class="emoji-big">🎉</span>
-            <h2>Thank You!</h2>
-            <p style="font-size:18px; color:#4a5568;">You've completed the quiz.</p>
+            <h2 id="outroTitle">Thank You!</h2>
+            <p style="font-size:18px; color:#4a5568;" id="outroText">You've completed the quiz.</p>
             <div class="thankyou-score" id="finalScoreDisplay">0</div>
-            <div style="font-size:16px; color:#718096;">points</div>
+            <div style="font-size:16px; color:#718096;" id="outroPoints">points</div>
             <br>
             <div class="thankyou-detail">⏱️ Time taken: <span id="finalTimeDisplay">0</span> seconds</div>
+            <div class="certificate-id" id="certificateIdDisplay">🆔 CERT-XXXXXXXXXX</div>
             <br><br>
-            <button onclick="viewResults()" style="background: linear-gradient(135deg, #ed8936, #dd6b20);">
+            
+            <div class="share-buttons">
+                <button class="share-btn share-cert" onclick="downloadCertificate()">📜 Download Certificate</button>
+                <button class="share-btn share-telegram" onclick="shareTelegram()">📤 Share Telegram</button>
+                <button class="share-btn share-vk" onclick="shareVK()">📤 Share VK</button>
+            </div>
+            
+            <br>
+            <button onclick="viewResults()" style="background: linear-gradient(135deg, #ed8936, #dd6b20);" id="btnViewResults">
                 🏆 View Leaderboard
             </button>
         </div>
@@ -567,8 +711,31 @@
     <!-- SECTION 3: RESULTS                                          -->
     <!-- ========================================================== -->
     <div id="resultsSection" class="section">
-        <h2>🏆 Results</h2>
+        <h2 id="titleResults">🏆 Results</h2>
         <div id="resultsContainer"></div>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- CERTIFICATE TEMPLATE (Hidden)                               -->
+    <!-- ========================================================== -->
+    <div id="certificate-template">
+        <div id="certificate-content" style="width:800px; padding:50px; background:white; font-family:Arial,sans-serif; text-align:center; border:5px solid #667eea; border-radius:20px;">
+            <div style="font-size:48px; margin-bottom:10px;">📜</div>
+            <h1 style="font-size:36px; color:#1a1a2e; margin:10px 0; background:none; -webkit-text-fill-color:#1a1a2e;">Certificate of Completion</h1>
+            <p style="font-size:18px; color:#4a5568; margin:10px 0;">This certificate is proudly presented to</p>
+            <h2 style="font-size:32px; color:#667eea; margin:15px 0;" id="certUserName">User</h2>
+            <p style="font-size:16px; color:#4a5568; margin:5px 0;">for successfully completing the</p>
+            <h3 style="font-size:24px; color:#2d3748; margin:10px 0;">MAX Quiz</h3>
+            <div style="background:#f7fafc; padding:20px; border-radius:12px; margin:20px 0; display:inline-block;">
+                <p style="font-size:48px; font-weight:800; color:#667eea; margin:0;" id="certScore">0</p>
+                <p style="font-size:16px; color:#4a5568; margin:0;">points scored</p>
+            </div>
+            <p style="font-size:16px; color:#4a5568;">Time taken: <strong id="certTime">0</strong> seconds</p>
+            <p style="font-size:14px; color:#718096; margin-top:20px; font-family:monospace;" id="certID">Certificate ID: CERT-XXXXXXXXXX</p>
+            <div style="margin-top:30px; border-top:2px solid #e2e8f0; padding-top:20px;">
+                <p style="font-size:14px; color:#a0aec0;">Generated by MAX Quiz • Southern Federal University</p>
+            </div>
+        </div>
     </div>
 
     <!-- ========================================================== -->
@@ -576,7 +743,178 @@
     <!-- ========================================================== -->
     <script>
         // ============================================================
-        // 1. INITIALIZATION - MAX USER ID
+        // 1. TRANSLATIONS
+        // ============================================================
+        const translations = {
+            en: {
+                navManage: 'Manage Questions',
+                navJoin: 'Join Quiz',
+                navResults: 'View Results',
+                titleAddQuestion: 'Add Question',
+                btnAddQuestion: '➕ Add Question',
+                titleQuestionBank: 'Question Bank',
+                btnExport: '📥 Export Questions',
+                btnImport: '📤 Import Questions',
+                titleLaunchQuiz: 'Launch a Quiz',
+                labelNumQuestions: 'Number of questions:',
+                labelTimePerQuestion: 'Time per question:',
+                btnLaunchQuiz: '🚀 Launch Quiz',
+                qrTitle: '📱 Scan to Open Quiz',
+                qrDesc: 'Scan this QR code with your phone camera to open the Quiz app',
+                titleJoinQuiz: '📝 Join Quiz',
+                btnJoin: 'Join',
+                introTitle: 'Quiz is Ready!',
+                introText: 'You are about to answer <strong id="introTotalQ">0</strong> questions.<br>⏱️ You have <strong id="introTimePerQ">30</strong> seconds per question.',
+                btnStartNow: '🚀 Start Now',
+                btnSubmit: '✅ Submit Answer',
+                outroTitle: 'Thank You!',
+                outroText: "You've completed the quiz.",
+                outroPoints: 'points',
+                btnViewResults: '🏆 View Leaderboard',
+                titleResults: '🏆 Results',
+                noQuestions: 'No questions yet. Add one above!',
+                enterCode: 'Enter join code',
+                pleaseFill: 'Please fill all fields',
+                questionAdded: 'Question added!',
+                deleteConfirm: 'Delete this question permanently?',
+                questionDeleted: 'Question deleted!',
+                deleteError: 'Error deleting question.',
+                noQuestionsExport: 'No questions to export!',
+                invalidJson: 'Invalid JSON file. Must contain an array of questions.',
+                invalidFormat: 'Invalid question format. Each question needs "question", "options", and "correct".',
+                importConfirm: 'Import {count} questions? This will add them to your existing bank.',
+                importCompleted: 'Import completed!',
+                importError: 'Error importing file: ',
+                launchError: 'Error: {error}',
+                quizLaunched: '✅ Quiz launched! <strong>Join Code: {code}</strong>',
+                timePerQ: '⏱️ {time} seconds per question.',
+                shareCode: 'Share this code with participants.',
+                joinError: 'Join failed: {error}',
+                enterJoinCode: 'Please enter the join code',
+                selectOption: 'Please select an option or wait for the timer.',
+                errorSubmitting: 'Error submitting answers',
+                noQuizSelected: 'No quiz selected.',
+                noResultsYet: 'No results yet.',
+                noParticipants: 'No participants yet.',
+                certTitle: 'Certificate of Completion',
+                certPresented: 'This certificate is proudly presented to',
+                certCompleted: 'for successfully completing the',
+                certPoints: 'points scored',
+                certGenerated: 'Generated by MAX Quiz • Southern Federal University',
+                shareTelegramText: '🎉 I completed the MAX Quiz and scored {score} points in {time} seconds! Try it yourself: {url}',
+                shareVKText: '🎉 I completed the MAX Quiz and scored {score} points in {time} seconds! Try it yourself: {url}',
+                certIdLabel: 'Certificate ID: ',
+                timeTaken: 'Time taken: ',
+                seconds: ' seconds'
+            },
+            ru: {
+                navManage: 'Управление вопросами',
+                navJoin: 'Присоединиться к викторине',
+                navResults: 'Результаты',
+                titleAddQuestion: 'Добавить вопрос',
+                btnAddQuestion: '➕ Добавить вопрос',
+                titleQuestionBank: 'Банк вопросов',
+                btnExport: '📥 Экспортировать вопросы',
+                btnImport: '📤 Импортировать вопросы',
+                titleLaunchQuiz: 'Запустить викторину',
+                labelNumQuestions: 'Количество вопросов:',
+                labelTimePerQuestion: 'Время на вопрос:',
+                btnLaunchQuiz: '🚀 Запустить викторину',
+                qrTitle: '📱 Отсканируйте QR-код',
+                qrDesc: 'Отсканируйте QR-код камерой телефона, чтобы открыть приложение',
+                titleJoinQuiz: '📝 Присоединиться',
+                btnJoin: 'Присоединиться',
+                introTitle: 'Викторина готова!',
+                introText: 'Вы ответите на <strong id="introTotalQ">0</strong> вопросов.<br>⏱️ У вас есть <strong id="introTimePerQ">30</strong> секунд на вопрос.',
+                btnStartNow: '🚀 Начать сейчас',
+                btnSubmit: '✅ Отправить ответ',
+                outroTitle: 'Спасибо!',
+                outroText: 'Вы завершили викторину.',
+                outroPoints: 'очков',
+                btnViewResults: '🏆 Посмотреть результаты',
+                titleResults: '🏆 Результаты',
+                noQuestions: 'Нет вопросов. Добавьте один выше!',
+                enterCode: 'Введите код',
+                pleaseFill: 'Пожалуйста, заполните все поля',
+                questionAdded: 'Вопрос добавлен!',
+                deleteConfirm: 'Удалить этот вопрос навсегда?',
+                questionDeleted: 'Вопрос удален!',
+                deleteError: 'Ошибка при удалении вопроса.',
+                noQuestionsExport: 'Нет вопросов для экспорта!',
+                invalidJson: 'Неверный JSON-файл. Должен содержать массив вопросов.',
+                invalidFormat: 'Неверный формат вопроса. Каждый вопрос должен содержать "question", "options" и "correct".',
+                importConfirm: 'Импортировать {count} вопросов? Они будут добавлены к существующим.',
+                importCompleted: 'Импорт завершен!',
+                importError: 'Ошибка импорта файла: ',
+                launchError: 'Ошибка: {error}',
+                quizLaunched: '✅ Викторина запущена! <strong>Код: {code}</strong>',
+                timePerQ: '⏱️ {time} секунд на вопрос.',
+                shareCode: 'Поделитесь этим кодом с участниками.',
+                joinError: 'Ошибка присоединения: {error}',
+                enterJoinCode: 'Пожалуйста, введите код',
+                selectOption: 'Пожалуйста, выберите вариант или дождитесь таймера.',
+                errorSubmitting: 'Ошибка при отправке ответов',
+                noQuizSelected: 'Викторина не выбрана.',
+                noResultsYet: 'Нет результатов.',
+                noParticipants: 'Нет участников.',
+                certTitle: 'Сертификат о завершении',
+                certPresented: 'Этот сертификат вручается',
+                certCompleted: 'за успешное прохождение',
+                certPoints: 'очков набрано',
+                certGenerated: 'Создано MAX Quiz • Южный федеральный университет',
+                shareTelegramText: '🎉 Я прошел викторину MAX Quiz и набрал {score} очков за {time} секунд! Попробуй сам: {url}',
+                shareVKText: '🎉 Я прошел викторину MAX Quiz и набрал {score} очков за {time} секунд! Попробуй сам: {url}',
+                certIdLabel: 'ID сертификата: ',
+                timeTaken: 'Время: ',
+                seconds: ' секунд'
+            }
+        };
+
+        let currentLang = 'en';
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            
+            // Navigation
+            document.getElementById('navManage').textContent = t.navManage;
+            document.getElementById('navJoin').textContent = t.navJoin;
+            document.getElementById('navResults').textContent = t.navResults;
+            
+            // Manage Section
+            document.getElementById('titleAddQuestion').textContent = t.titleAddQuestion;
+            document.getElementById('btnAddQuestion').textContent = t.btnAddQuestion;
+            document.getElementById('titleQuestionBank').textContent = t.titleQuestionBank;
+            document.getElementById('btnExport').textContent = t.btnExport;
+            document.getElementById('btnImport').textContent = t.btnImport;
+            document.getElementById('titleLaunchQuiz').textContent = t.titleLaunchQuiz;
+            document.getElementById('labelNumQuestions').textContent = t.labelNumQuestions;
+            document.getElementById('labelTimePerQuestion').textContent = t.labelTimePerQuestion;
+            document.getElementById('btnLaunchQuiz').textContent = t.btnLaunchQuiz;
+            document.getElementById('qrTitle').textContent = t.qrTitle;
+            document.getElementById('qrDesc').textContent = t.qrDesc;
+            
+            // Join Section
+            document.getElementById('titleJoinQuiz').textContent = t.titleJoinQuiz;
+            document.getElementById('btnJoin').textContent = t.btnJoin;
+            document.getElementById('introTitle').textContent = t.introTitle;
+            document.getElementById('introText').innerHTML = t.introText;
+            document.getElementById('btnStartNow').textContent = t.btnStartNow;
+            document.getElementById('submitBtn').textContent = t.btnSubmit;
+            document.getElementById('outroTitle').textContent = t.outroTitle;
+            document.getElementById('outroText').textContent = t.outroText;
+            document.getElementById('outroPoints').textContent = t.outroPoints;
+            document.getElementById('btnViewResults').textContent = t.btnViewResults;
+            
+            // Results Section
+            document.getElementById('titleResults').textContent = t.titleResults;
+            
+            // Placeholder
+            document.getElementById('joinCodeInput').placeholder = t.enterCode;
+        }
+
+        // ============================================================
+        // 2. INITIALIZATION - MAX USER ID
         // ============================================================
         let maxUserInfo = null;
 
@@ -609,8 +947,15 @@
             }
         }
 
+        function getUserName() {
+            if (maxUserInfo && maxUserInfo.firstName) {
+                return maxUserInfo.firstName + ' ' + (maxUserInfo.lastName || '');
+            }
+            return 'User';
+        }
+
         // ============================================================
-        // 2. GLOBAL STATE
+        // 3. GLOBAL STATE
         // ============================================================
         let currentQuizId = null;
         let participantId = null;
@@ -623,9 +968,12 @@
         let userAnswers = [];
         let totalQuestions = 0;
         let isSubmitting = false;
+        let finalScore = 0;
+        let finalTime = 0;
+        let certificateID = '';
 
         // ============================================================
-        // 3. UI HELPERS
+        // 4. UI HELPERS
         // ============================================================
         function showSection(section) {
             document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
@@ -637,8 +985,12 @@
             }
         }
 
+        function t(key) {
+            return translations[currentLang][key] || key;
+        }
+
         // ============================================================
-        // 4. MANAGE QUESTIONS
+        // 5. MANAGE QUESTIONS
         // ============================================================
         async function addQuestion() {
             const question = document.getElementById('qText').value.trim();
@@ -650,7 +1002,7 @@
             ];
             const correct = parseInt(document.getElementById('correctOpt').value);
             if (!question || options.some(o => !o)) {
-                alert('Please fill all fields');
+                alert(t('pleaseFill'));
                 return;
             }
             const resp = await fetch('/api/questions', {
@@ -659,7 +1011,7 @@
                 body: JSON.stringify({ question, options, correct })
             });
             if (resp.ok) {
-                alert('Question added!');
+                alert(t('questionAdded'));
                 loadQuestions();
                 document.getElementById('qText').value = '';
                 document.getElementById('opt1').value = '';
@@ -677,7 +1029,7 @@
             const data = await resp.json();
             const list = document.getElementById('questionList');
             if (data.length === 0) {
-                list.innerHTML = '<div style="color:#718096;">No questions yet. Add one above!</div>';
+                list.innerHTML = '<div style="color:#718096;">' + t('noQuestions') + '</div>';
                 return;
             }
             list.innerHTML = data.map(q => `
@@ -689,24 +1041,24 @@
         }
 
         async function deleteQuestion(qid) {
-            if (!confirm('Delete this question permanently?')) return;
+            if (!confirm(t('deleteConfirm'))) return;
             const resp = await fetch(`/api/questions/${qid}`, { method: 'DELETE' });
             if (resp.ok) {
-                alert('Question deleted!');
+                alert(t('questionDeleted'));
                 loadQuestions();
             } else {
-                alert('Error deleting question.');
+                alert(t('deleteError'));
             }
         }
 
         // ============================================================
-        // 5. EXPORT / IMPORT QUESTIONS
+        // 6. EXPORT / IMPORT
         // ============================================================
         async function exportQuestions() {
             const resp = await fetch('/api/questions');
             const data = await resp.json();
             if (data.length === 0) {
-                alert('No questions to export!');
+                alert(t('noQuestionsExport'));
                 return;
             }
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
@@ -726,16 +1078,16 @@
                 const text = await file.text();
                 const questions = JSON.parse(text);
                 if (!Array.isArray(questions) || questions.length === 0) {
-                    alert('Invalid JSON file. Must contain an array of questions.');
+                    alert(t('invalidJson'));
                     return;
                 }
                 const first = questions[0];
                 if (!first.question || !first.options || !first.correct) {
-                    alert('Invalid question format. Each question needs "question", "options", and "correct".');
+                    alert(t('invalidFormat'));
                     return;
                 }
                 
-                if (!confirm(`Import ${questions.length} questions? This will add them to your existing bank.`)) return;
+                if (!confirm(t('importConfirm').replace('{count}', questions.length))) return;
                 
                 const resp = await fetch('/api/questions/import', {
                     method: 'POST',
@@ -744,16 +1096,16 @@
                 });
                 
                 const result = await resp.json();
-                alert(result.message || 'Import completed!');
+                alert(result.message || t('importCompleted'));
                 loadQuestions();
             } catch (e) {
-                alert('Error importing file: ' + e.message);
+                alert(t('importError') + e.message);
             }
             event.target.value = '';
         }
 
         // ============================================================
-        // 6. LAUNCH QUIZ (Host)
+        // 7. LAUNCH QUIZ
         // ============================================================
         async function launchQuiz() {
             const num = parseInt(document.getElementById('numQuestions').value) || 3;
@@ -766,25 +1118,25 @@
             });
             if (!resp.ok) {
                 const err = await resp.json();
-                alert('Error: ' + err.error);
+                alert(t('launchError').replace('{error}', err.error));
                 return;
             }
             const data = await resp.json();
             document.getElementById('launchInfo').innerHTML = `
-                <p>✅ Quiz launched! <strong>Join Code: ${data.code}</strong></p>
-                <p>⏱️ ${data.time_per_question} seconds per question.</p>
-                <p>Share this code with participants.</p>
+                <p>${t('quizLaunched').replace('{code}', data.code)}</p>
+                <p>${t('timePerQ').replace('{time}', data.time_per_question)}</p>
+                <p>${t('shareCode')}</p>
             `;
             currentQuizId = data.quiz_id;
         }
 
         // ============================================================
-        // 7. JOIN QUIZ (Participant)
+        // 8. JOIN QUIZ
         // ============================================================
         async function joinQuiz() {
             const code = document.getElementById('joinCodeInput').value.trim();
             if (!code) {
-                alert('Please enter the join code');
+                alert(t('enterJoinCode'));
                 return;
             }
 
@@ -798,7 +1150,7 @@
             });
             if (!resp.ok) {
                 const err = await resp.json();
-                alert('Join failed: ' + err.error);
+                alert(t('joinError').replace('{error}', err.error));
                 return;
             }
             const data = await resp.json();
@@ -817,7 +1169,7 @@
         }
 
         // ============================================================
-        // 8. START QUIZ
+        // 9. START QUIZ
         // ============================================================
         function startQuizNow() {
             document.getElementById('introPanel').style.display = 'none';
@@ -832,7 +1184,7 @@
         }
 
         // ============================================================
-        // 9. DISPLAY QUESTION
+        // 10. DISPLAY QUESTION
         // ============================================================
         function showQuestion() {
             const fb = document.getElementById('feedbackMsg');
@@ -882,7 +1234,7 @@
         }
 
         // ============================================================
-        // 10. TIMER
+        // 11. TIMER
         // ============================================================
         function startTimer() {
             if (timerInterval) clearInterval(timerInterval);
@@ -902,7 +1254,7 @@
         }
 
         // ============================================================
-        // 11. SUBMIT SINGLE ANSWER (WITH FEEDBACK)
+        // 12. SUBMIT ANSWER
         // ============================================================
         function submitAnswer() {
             if (isSubmitting) return;
@@ -910,7 +1262,7 @@
             clearInterval(timerInterval);
             
             if (selectedOption === null) {
-                alert('Please select an option or wait for the timer.');
+                alert(t('selectOption'));
                 startTimer();
                 return;
             }
@@ -982,7 +1334,7 @@
         }
 
         // ============================================================
-        // 12. SUBMIT ALL ANSWERS -> Shows OUTRO (with CONFETTI)
+        // 13. SUBMIT ALL ANSWERS
         // ============================================================
         async function submitAllAnswers() {
             const timeTaken = Math.floor((Date.now() - startTime) / 1000);
@@ -998,19 +1350,26 @@
                 })
             });
             if (!resp.ok) {
-                alert('Error submitting answers');
+                alert(t('errorSubmitting'));
                 return;
             }
             const data = await resp.json();
 
+            finalScore = data.score;
+            finalTime = timeTaken;
+            
+            // Generate unique certificate ID
+            certificateID = 'CERT-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substr(2, 4).toUpperCase();
+
             document.getElementById('playPanel').style.display = 'none';
             document.getElementById('outroPanel').style.display = 'block';
             
-            document.getElementById('finalScoreDisplay').textContent = data.score;
-            document.getElementById('finalTimeDisplay').textContent = timeTaken;
+            document.getElementById('finalScoreDisplay').textContent = finalScore;
+            document.getElementById('finalTimeDisplay').textContent = finalTime;
+            document.getElementById('certificateIdDisplay').textContent = '🆔 ' + certificateID;
 
-            // 🎊 CONFETTI EXPLOSION
-            if (data.score > 0) {
+            // Confetti
+            if (finalScore > 0) {
                 confetti({
                     particleCount: 100,
                     spread: 70,
@@ -1036,7 +1395,7 @@
         }
 
         // ============================================================
-        // 13. VIEW RESULTS
+        // 14. VIEW RESULTS
         // ============================================================
         function viewResults() {
             document.getElementById('outroPanel').style.display = 'none';
@@ -1044,24 +1403,24 @@
         }
 
         // ============================================================
-        // 14. FETCH RESULTS
+        // 15. FETCH RESULTS
         // ============================================================
         async function fetchResults(quizId) {
             if (!quizId) {
                 quizId = currentQuizId;
             }
             if (!quizId) {
-                document.getElementById('resultsContainer').innerHTML = '<p>No quiz selected.</p>';
+                document.getElementById('resultsContainer').innerHTML = '<p>' + t('noQuizSelected') + '</p>';
                 return;
             }
             const resp = await fetch(`/api/quiz/results/${quizId}`);
             if (!resp.ok) {
-                document.getElementById('resultsContainer').innerHTML = '<p>No results yet.</p>';
+                document.getElementById('resultsContainer').innerHTML = '<p>' + t('noResultsYet') + '</p>';
                 return;
             }
             const data = await resp.json();
             if (data.length === 0) {
-                document.getElementById('resultsContainer').innerHTML = '<p>No participants yet.</p>';
+                document.getElementById('resultsContainer').innerHTML = '<p>' + t('noParticipants') + '</p>';
                 return;
             }
             let html = '<h3>🏆 Ranking</h3>';
@@ -1076,18 +1435,69 @@
         }
 
         // ============================================================
-        // 15. QR CODE GENERATION
+        // 16. SHARE FUNCTIONS
+        // ============================================================
+        function shareTelegram() {
+            const url = window.location.href;
+            const text = t('shareTelegramText')
+                .replace('{score}', finalScore)
+                .replace('{time}', finalTime)
+                .replace('{url}', url);
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function shareVK() {
+            const url = window.location.href;
+            const text = t('shareVKText')
+                .replace('{score}', finalScore)
+                .replace('{time}', finalTime)
+                .replace('{url}', url);
+            window.open(`https://vk.com/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        // ============================================================
+        // 17. CERTIFICATE DOWNLOAD
+        // ============================================================
+        function downloadCertificate() {
+            const userName = getUserName();
+            
+            // Update certificate content
+            document.getElementById('certUserName').textContent = userName;
+            document.getElementById('certScore').textContent = finalScore;
+            document.getElementById('certTime').textContent = finalTime;
+            document.getElementById('certID').textContent = t('certIdLabel') + certificateID;
+            
+            // Get the certificate element
+            const certElement = document.getElementById('certificate-content');
+            
+            // Use html2canvas to render certificate
+            html2canvas(certElement, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                logging: false
+            }).then((canvas) => {
+                const imgData = canvas.toDataURL('image/png');
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const pdfWidth = pdf.internal.pageSize.getWidth();
+                const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+                pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                pdf.save(`MAX_Quiz_Certificate_${certificateID}.pdf`);
+            }).catch((err) => {
+                console.error('Certificate generation error:', err);
+                alert('Error generating certificate. Please try again.');
+            });
+        }
+
+        // ============================================================
+        // 18. QR CODE GENERATION
         // ============================================================
         function generateQRCode() {
             const qrContainer = document.getElementById('qrcode');
             if (qrContainer) {
-                // Get the current page URL
                 const url = window.location.href;
-                
-                // Clear any existing QR code
                 qrContainer.innerHTML = '';
-                
-                // Generate new QR code
                 new QRCode(qrContainer, {
                     text: url,
                     width: 180,
@@ -1100,14 +1510,15 @@
         }
 
         // ============================================================
-        // 16. INITIAL LOAD
+        // 19. INITIAL LOAD
         // ============================================================
         loadQuestions();
         showSection('manage');
         
-        // Generate QR code when page loads
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(generateQRCode, 500);
+            // Set default language
+            document.getElementById('langSelect').value = 'en';
         });
     </script>
 </body>
