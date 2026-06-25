@@ -35,7 +35,6 @@
             color: #1a1a2e;
         }
 
-        /* --- HEADER WITH LOGO & LANGUAGE SWITCH --- */
         .header {
             display: flex;
             justify-content: space-between;
@@ -58,12 +57,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: -1px;
-        }
-
-        .logo img {
-            height: 40px;
-            width: auto;
-            vertical-align: middle;
         }
 
         .header-right {
@@ -94,18 +87,6 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
         }
 
-        h1 {
-            font-size: 32px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 25px;
-            text-align: center;
-            display: none;
-        }
-
-        /* --- NAVIGATION TABS --- */
         .nav-tabs {
             display: flex;
             gap: 10px;
@@ -139,7 +120,6 @@
             transform: scale(0.95);
         }
 
-        /* --- CARDS --- */
         .section {
             display: none;
             background: white;
@@ -176,7 +156,6 @@
             color: #2d3748;
         }
 
-        /* --- FORM ELEMENTS --- */
         input, select {
             width: 100%;
             padding: 12px 16px;
@@ -195,7 +174,6 @@
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
         }
 
-        /* --- BUTTONS --- */
         button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -249,7 +227,6 @@
             background: #e53e3e !important;
         }
 
-        /* --- SHARE BUTTONS --- */
         .share-buttons {
             display: flex;
             gap: 10px;
@@ -300,7 +277,6 @@
             background: #276749;
         }
 
-        /* --- QUESTION BANK --- */
         #questionList div {
             background: #f8f9fc;
             padding: 10px 16px;
@@ -313,7 +289,6 @@
             align-items: center;
         }
 
-        /* --- QUIZ OPTIONS --- */
         .options-container {
             display: flex;
             flex-direction: column;
@@ -344,7 +319,6 @@
             box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
         }
 
-        /* --- TIMER --- */
         #timer {
             font-size: 20px;
             font-weight: 700;
@@ -361,7 +335,6 @@
             font-size: 26px;
         }
 
-        /* --- RESULTS --- */
         .result-item {
             display: flex;
             justify-content: space-between;
@@ -384,7 +357,6 @@
             font-weight: 700;
         }
 
-        /* --- LAUNCH INFO --- */
         #launchInfo p {
             background: #ebf8ff;
             border: 2px dashed #63b3ed;
@@ -411,7 +383,6 @@
             margin: 25px 0;
         }
 
-        /* --- INTRO / OUTRO --- */
         .panel-box {
             text-align: center;
             padding: 40px 20px;
@@ -450,7 +421,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- PROGRESS BAR --- */
         .progress-wrapper {
             margin-bottom: 10px;
             background: #edf2f7;
@@ -476,7 +446,6 @@
             margin-bottom: 15px;
         }
 
-        /* --- OUTRO --- */
         .thankyou-score {
             font-size: 48px;
             font-weight: 800;
@@ -510,7 +479,6 @@
             display: none;
         }
 
-        /* --- QR CODE --- */
         .qr-container {
             text-align: center;
             margin: 20px 0;
@@ -539,12 +507,16 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.08);
         }
 
-        /* --- CERTIFICATE HIDDEN --- */
+        /* --- CERTIFICATE FIX --- */
         #certificate-template {
-            display: none;
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            z-index: -1;
+            width: 800px;
+            background: white;
         }
 
-        /* --- RESPONSIVE --- */
         @media (max-width: 600px) {
             body { padding: 10px; }
             .section { padding: 20px; }
@@ -558,14 +530,9 @@
 </head>
 <body>
 
-    <!-- ========================================================== -->
-    <!-- HEADER WITH LOGO + LANGUAGE SWITCH                         -->
-    <!-- ========================================================== -->
     <div class="header">
         <div class="header-left">
-            <div class="logo">
-                <span>📚 MAX Quiz</span>
-            </div>
+            <div class="logo">📚 MAX Quiz</div>
         </div>
         <div class="header-right">
             <select class="lang-select" id="langSelect" onchange="switchLanguage(this.value)">
@@ -575,18 +542,12 @@
         </div>
     </div>
 
-    <!-- ========================================================== -->
-    <!-- NAVIGATION                                                 -->
-    <!-- ========================================================== -->
     <div class="nav-tabs">
         <button onclick="showSection('manage')" id="navManage">Manage Questions</button>
         <button onclick="showSection('quiz')" id="navJoin">Join Quiz</button>
         <button onclick="showSection('results')" id="navResults">View Results</button>
     </div>
 
-    <!-- ========================================================== -->
-    <!-- SECTION 1: MANAGE QUESTIONS                                 -->
-    <!-- ========================================================== -->
     <div id="manageSection" class="section active">
         <h2 id="titleAddQuestion">Add Question</h2>
         <div class="card">
@@ -647,9 +608,6 @@
         </div>
     </div>
 
-    <!-- ========================================================== -->
-    <!-- SECTION 2: JOIN / PLAY QUIZ                                 -->
-    <!-- ========================================================== -->
     <div id="quizSection" class="section">
         <h2 id="titleJoinQuiz">📝 Join Quiz</h2>
         
@@ -707,17 +665,12 @@
         </div>
     </div>
 
-    <!-- ========================================================== -->
-    <!-- SECTION 3: RESULTS                                          -->
-    <!-- ========================================================== -->
     <div id="resultsSection" class="section">
         <h2 id="titleResults">🏆 Results</h2>
         <div id="resultsContainer"></div>
     </div>
 
-    <!-- ========================================================== -->
-    <!-- CERTIFICATE TEMPLATE (Hidden)                               -->
-    <!-- ========================================================== -->
+    <!-- Certificate Template (Off-screen) -->
     <div id="certificate-template">
         <div id="certificate-content" style="width:800px; padding:50px; background:white; font-family:Arial,sans-serif; text-align:center; border:5px solid #667eea; border-radius:20px;">
             <div style="font-size:48px; margin-bottom:10px;">📜</div>
@@ -738,12 +691,9 @@
         </div>
     </div>
 
-    <!-- ========================================================== -->
-    <!-- JAVASCRIPT                                                  -->
-    <!-- ========================================================== -->
     <script>
         // ============================================================
-        // 1. TRANSLATIONS
+        // TRANSLATIONS
         // ============================================================
         const translations = {
             en: {
@@ -875,13 +825,9 @@
         function switchLanguage(lang) {
             currentLang = lang;
             const t = translations[lang];
-            
-            // Navigation
             document.getElementById('navManage').textContent = t.navManage;
             document.getElementById('navJoin').textContent = t.navJoin;
             document.getElementById('navResults').textContent = t.navResults;
-            
-            // Manage Section
             document.getElementById('titleAddQuestion').textContent = t.titleAddQuestion;
             document.getElementById('btnAddQuestion').textContent = t.btnAddQuestion;
             document.getElementById('titleQuestionBank').textContent = t.titleQuestionBank;
@@ -893,8 +839,6 @@
             document.getElementById('btnLaunchQuiz').textContent = t.btnLaunchQuiz;
             document.getElementById('qrTitle').textContent = t.qrTitle;
             document.getElementById('qrDesc').textContent = t.qrDesc;
-            
-            // Join Section
             document.getElementById('titleJoinQuiz').textContent = t.titleJoinQuiz;
             document.getElementById('btnJoin').textContent = t.btnJoin;
             document.getElementById('introTitle').textContent = t.introTitle;
@@ -905,17 +849,10 @@
             document.getElementById('outroText').textContent = t.outroText;
             document.getElementById('outroPoints').textContent = t.outroPoints;
             document.getElementById('btnViewResults').textContent = t.btnViewResults;
-            
-            // Results Section
             document.getElementById('titleResults').textContent = t.titleResults;
-            
-            // Placeholder
             document.getElementById('joinCodeInput').placeholder = t.enterCode;
         }
 
-        // ============================================================
-        // 2. INITIALIZATION - MAX USER ID
-        // ============================================================
         let maxUserInfo = null;
 
         function initMaxUser() {
@@ -954,9 +891,6 @@
             return 'User';
         }
 
-        // ============================================================
-        // 3. GLOBAL STATE
-        // ============================================================
         let currentQuizId = null;
         let participantId = null;
         let questions = [];
@@ -972,9 +906,6 @@
         let finalTime = 0;
         let certificateID = '';
 
-        // ============================================================
-        // 4. UI HELPERS
-        // ============================================================
         function showSection(section) {
             document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
             if (section === 'manage') document.getElementById('manageSection').classList.add('active');
@@ -989,9 +920,6 @@
             return translations[currentLang][key] || key;
         }
 
-        // ============================================================
-        // 5. MANAGE QUESTIONS
-        // ============================================================
         async function addQuestion() {
             const question = document.getElementById('qText').value.trim();
             const options = [
@@ -1051,9 +979,6 @@
             }
         }
 
-        // ============================================================
-        // 6. EXPORT / IMPORT
-        // ============================================================
         async function exportQuestions() {
             const resp = await fetch('/api/questions');
             const data = await resp.json();
@@ -1073,7 +998,6 @@
         async function importQuestions(event) {
             const file = event.target.files[0];
             if (!file) return;
-            
             try {
                 const text = await file.text();
                 const questions = JSON.parse(text);
@@ -1086,15 +1010,12 @@
                     alert(t('invalidFormat'));
                     return;
                 }
-                
                 if (!confirm(t('importConfirm').replace('{count}', questions.length))) return;
-                
                 const resp = await fetch('/api/questions/import', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ questions })
                 });
-                
                 const result = await resp.json();
                 alert(result.message || t('importCompleted'));
                 loadQuestions();
@@ -1104,13 +1025,9 @@
             event.target.value = '';
         }
 
-        // ============================================================
-        // 7. LAUNCH QUIZ
-        // ============================================================
         async function launchQuiz() {
             const num = parseInt(document.getElementById('numQuestions').value) || 3;
             const time_per_question = parseInt(document.getElementById('timePerQuestion').value) || 30;
-            
             const resp = await fetch('/api/quiz/launch', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -1130,19 +1047,14 @@
             currentQuizId = data.quiz_id;
         }
 
-        // ============================================================
-        // 8. JOIN QUIZ
-        // ============================================================
         async function joinQuiz() {
             const code = document.getElementById('joinCodeInput').value.trim();
             if (!code) {
                 alert(t('enterJoinCode'));
                 return;
             }
-
             const user_id = getUserIdForQuiz();
             console.log('Joining with user ID:', user_id);
-
             const resp = await fetch('/api/quiz/join', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -1159,7 +1071,6 @@
             questions = data.questions;
             totalQuestions = questions.length;
             timePerQuestion = data.time_per_question || 30;
-
             document.getElementById('joinPanel').style.display = 'none';
             document.getElementById('introPanel').style.display = 'block';
             document.getElementById('introTotalQ').textContent = totalQuestions;
@@ -1168,28 +1079,19 @@
             document.getElementById('outroPanel').style.display = 'none';
         }
 
-        // ============================================================
-        // 9. START QUIZ
-        // ============================================================
         function startQuizNow() {
             document.getElementById('introPanel').style.display = 'none';
             document.getElementById('playPanel').style.display = 'block';
-            
             currentQuestionIndex = 0;
             userAnswers = new Array(questions.length).fill(null);
             startTime = Date.now();
             isSubmitting = false;
-            
             showQuestion();
         }
 
-        // ============================================================
-        // 10. DISPLAY QUESTION
-        // ============================================================
         function showQuestion() {
             const fb = document.getElementById('feedbackMsg');
             if (fb) fb.remove();
-            
             document.querySelectorAll('.option').forEach(el => {
                 el.style.pointerEvents = 'auto';
                 el.style.border = '2px solid #e2e8f0';
@@ -1198,21 +1100,16 @@
             });
             document.getElementById('submitBtn').disabled = false;
             isSubmitting = false;
-
             if (currentQuestionIndex >= questions.length) {
                 clearInterval(timerInterval);
                 submitAllAnswers();
                 return;
             }
-
             const progressPercent = ((currentQuestionIndex + 1) / totalQuestions) * 100;
             document.getElementById('progressFill').style.width = progressPercent + '%';
-            document.getElementById('questionCounter').textContent = 
-                `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
-
+            document.getElementById('questionCounter').textContent = `Question ${currentQuestionIndex + 1} of ${totalQuestions}`;
             const q = questions[currentQuestionIndex];
             document.getElementById('qTextDisplay').textContent = `${currentQuestionIndex+1}. ${q.question}`;
-            
             const optsDiv = document.getElementById('optionsDisplay');
             optsDiv.innerHTML = '';
             q.options.forEach((opt, idx) => {
@@ -1228,14 +1125,10 @@
                 };
                 optsDiv.appendChild(div);
             });
-
             selectedOption = null;
             startTimer();
         }
 
-        // ============================================================
-        // 11. TIMER
-        // ============================================================
         function startTimer() {
             if (timerInterval) clearInterval(timerInterval);
             let timeLeft = timePerQuestion;
@@ -1253,29 +1146,20 @@
             }, 1000);
         }
 
-        // ============================================================
-        // 12. SUBMIT ANSWER
-        // ============================================================
         function submitAnswer() {
             if (isSubmitting) return;
-            
             clearInterval(timerInterval);
-            
             if (selectedOption === null) {
                 alert(t('selectOption'));
                 startTimer();
                 return;
             }
-            
             isSubmitting = true;
-            
             const currentQ = questions[currentQuestionIndex];
             const isCorrect = (selectedOption === currentQ.correct);
             const isTimeout = (selectedOption === -1);
-            
             document.querySelectorAll('.option').forEach(el => el.style.pointerEvents = 'none');
             document.getElementById('submitBtn').disabled = true;
-            
             const opts = document.querySelectorAll('.option');
             opts.forEach(el => {
                 const val = parseInt(el.dataset.opt);
@@ -1288,14 +1172,12 @@
                     el.style.background = '#fff5f5';
                 }
             });
-            
             const feedbackDiv = document.createElement('div');
             feedbackDiv.id = 'feedbackMsg';
             feedbackDiv.style.textAlign = 'center';
             feedbackDiv.style.marginTop = '15px';
             feedbackDiv.style.fontSize = '20px';
             feedbackDiv.style.fontWeight = 'bold';
-            
             if (isTimeout) {
                 feedbackDiv.innerHTML = `⏰ Time's up! Correct answer was: ${String.fromCharCode(64 + currentQ.correct)}.`;
                 feedbackDiv.style.color = '#d69e2e';
@@ -1307,15 +1189,12 @@
                 feedbackDiv.style.color = '#e53e3e';
             }
             document.getElementById('questionDisplay').appendChild(feedbackDiv);
-            
             userAnswers[currentQuestionIndex] = selectedOption;
             currentQuestionIndex++;
             selectedOption = null;
-            
             setTimeout(() => {
                 const fb = document.getElementById('feedbackMsg');
                 if (fb) fb.remove();
-                
                 document.querySelectorAll('.option').forEach(el => {
                     el.style.pointerEvents = 'auto';
                     el.style.border = '2px solid #e2e8f0';
@@ -1324,7 +1203,6 @@
                 });
                 document.getElementById('submitBtn').disabled = false;
                 isSubmitting = false;
-                
                 if (currentQuestionIndex < questions.length) {
                     showQuestion();
                 } else {
@@ -1333,13 +1211,9 @@
             }, 1500);
         }
 
-        // ============================================================
-        // 13. SUBMIT ALL ANSWERS
-        // ============================================================
         async function submitAllAnswers() {
             const timeTaken = Math.floor((Date.now() - startTime) / 1000);
             const ans = userAnswers.map(a => a === -1 ? 0 : a);
-            
             const resp = await fetch('/api/quiz/submit', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -1354,128 +1228,74 @@
                 return;
             }
             const data = await resp.json();
-
             finalScore = data.score;
             finalTime = timeTaken;
-            
-            // Generate unique certificate ID
             certificateID = 'CERT-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substr(2, 4).toUpperCase();
-
             document.getElementById('playPanel').style.display = 'none';
             document.getElementById('outroPanel').style.display = 'block';
-            
             document.getElementById('finalScoreDisplay').textContent = finalScore;
             document.getElementById('finalTimeDisplay').textContent = finalTime;
             document.getElementById('certificateIdDisplay').textContent = '🆔 ' + certificateID;
-
-            // Confetti
             if (finalScore > 0) {
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 },
-                    colors: ['#667eea', '#764ba2', '#48bb78', '#ed8936', '#f56565']
-                });
-                setTimeout(() => {
-                    confetti({
-                        particleCount: 50,
-                        spread: 50,
-                        origin: { y: 0.4 },
-                        colors: ['#ffd700', '#ff6b6b', '#4ecdc4']
-                    });
-                }, 200);
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#667eea', '#764ba2', '#48bb78', '#ed8936', '#f56565'] });
+                setTimeout(() => { confetti({ particleCount: 50, spread: 50, origin: { y: 0.4 }, colors: ['#ffd700', '#ff6b6b', '#4ecdc4'] }); }, 200);
             } else {
-                confetti({
-                    particleCount: 30,
-                    spread: 40,
-                    origin: { y: 0.5 },
-                    colors: ['#a0aec0', '#cbd5e0']
-                });
+                confetti({ particleCount: 30, spread: 40, origin: { y: 0.5 }, colors: ['#a0aec0', '#cbd5e0'] });
             }
         }
 
-        // ============================================================
-        // 14. VIEW RESULTS
-        // ============================================================
         function viewResults() {
             document.getElementById('outroPanel').style.display = 'none';
             showSection('results');
         }
 
-        // ============================================================
-        // 15. FETCH RESULTS
-        // ============================================================
         async function fetchResults(quizId) {
-            if (!quizId) {
-                quizId = currentQuizId;
-            }
-            if (!quizId) {
-                document.getElementById('resultsContainer').innerHTML = '<p>' + t('noQuizSelected') + '</p>';
-                return;
-            }
+            if (!quizId) { quizId = currentQuizId; }
+            if (!quizId) { document.getElementById('resultsContainer').innerHTML = '<p>' + t('noQuizSelected') + '</p>'; return; }
             const resp = await fetch(`/api/quiz/results/${quizId}`);
-            if (!resp.ok) {
-                document.getElementById('resultsContainer').innerHTML = '<p>' + t('noResultsYet') + '</p>';
-                return;
-            }
+            if (!resp.ok) { document.getElementById('resultsContainer').innerHTML = '<p>' + t('noResultsYet') + '</p>'; return; }
             const data = await resp.json();
-            if (data.length === 0) {
-                document.getElementById('resultsContainer').innerHTML = '<p>' + t('noParticipants') + '</p>';
-                return;
-            }
+            if (data.length === 0) { document.getElementById('resultsContainer').innerHTML = '<p>' + t('noParticipants') + '</p>'; return; }
             let html = '<h3>🏆 Ranking</h3>';
             data.forEach((p, i) => {
                 const timeDisplay = p.time_taken !== null ? p.time_taken + 's' : 'N/A';
-                html += `<div class="result-item">
-                    <span>${i+1}. User ${p.user_id}</span>
-                    <span>Score: ${p.score} | Time: ${timeDisplay}</span>
-                </div>`;
+                html += `<div class="result-item"><span>${i+1}. User ${p.user_id}</span><span>Score: ${p.score} | Time: ${timeDisplay}</span></div>`;
             });
             document.getElementById('resultsContainer').innerHTML = html;
         }
 
-        // ============================================================
-        // 16. SHARE FUNCTIONS
-        // ============================================================
         function shareTelegram() {
             const url = window.location.href;
-            const text = t('shareTelegramText')
-                .replace('{score}', finalScore)
-                .replace('{time}', finalTime)
-                .replace('{url}', url);
+            const text = t('shareTelegramText').replace('{score}', finalScore).replace('{time}', finalTime).replace('{url}', url);
             window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`, '_blank');
         }
 
         function shareVK() {
             const url = window.location.href;
-            const text = t('shareVKText')
-                .replace('{score}', finalScore)
-                .replace('{time}', finalTime)
-                .replace('{url}', url);
+            const text = t('shareVKText').replace('{score}', finalScore).replace('{time}', finalTime).replace('{url}', url);
             window.open(`https://vk.com/share.php?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}`, '_blank');
         }
 
         // ============================================================
-        // 17. CERTIFICATE DOWNLOAD
+        // FIXED CERTIFICATE DOWNLOAD FUNCTION
         // ============================================================
         function downloadCertificate() {
             const userName = getUserName();
-            
-            // Update certificate content
             document.getElementById('certUserName').textContent = userName;
             document.getElementById('certScore').textContent = finalScore;
             document.getElementById('certTime').textContent = finalTime;
             document.getElementById('certID').textContent = t('certIdLabel') + certificateID;
             
-            // Get the certificate element
             const certElement = document.getElementById('certificate-content');
             
-            // Use html2canvas to render certificate
             html2canvas(certElement, {
-                scale: 2,
+                scale: 2.5,
                 useCORS: true,
                 backgroundColor: '#ffffff',
-                logging: false
+                logging: false,
+                width: 800,
+                height: certElement.scrollHeight,
+                windowHeight: certElement.scrollHeight
             }).then((canvas) => {
                 const imgData = canvas.toDataURL('image/png');
                 const { jsPDF } = window.jspdf;
@@ -1490,34 +1310,19 @@
             });
         }
 
-        // ============================================================
-        // 18. QR CODE GENERATION
-        // ============================================================
         function generateQRCode() {
             const qrContainer = document.getElementById('qrcode');
             if (qrContainer) {
                 const url = window.location.href;
                 qrContainer.innerHTML = '';
-                new QRCode(qrContainer, {
-                    text: url,
-                    width: 180,
-                    height: 180,
-                    colorDark: "#667eea",
-                    colorLight: "#ffffff",
-                    correctLevel: QRCode.CorrectLevel.H
-                });
+                new QRCode(qrContainer, { text: url, width: 180, height: 180, colorDark: "#667eea", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
             }
         }
 
-        // ============================================================
-        // 19. INITIAL LOAD
-        // ============================================================
         loadQuestions();
         showSection('manage');
-        
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(generateQRCode, 500);
-            // Set default language
             document.getElementById('langSelect').value = 'en';
         });
     </script>
